@@ -1,8 +1,6 @@
-### API reference for Selenium WebDriver JS
+### API documentation for Selenium WebDriver JS
 
-Are you writing integration tests using Protractor or WebDriverJS and simply can't seem to find a proper api reference? We sure couldn't, so we generated it: http://appfigures.github.io/webdriver-js-api-reference.
-
-(Generated for [selenium-webdriver](https://npmjs.org/package/selenium-webdriver) v2.39.0)
+One day we were writing integration tests using [Protractor](https://github.com/angular/protractor) or [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs) and simply couldn't find a proper API reference so we generated it: http://appfigures.github.io/webdriver-js-api-reference.
 
 #### Not sure where to start? Try these areas of interest:
 - [webdriver.WebDriver](http://appfigures.github.io/webdriver-js-api-reference/symbols/webdriver.WebDriver.html) - The object exposed by `webdriver` (for documentation on methods like `webdriver.get()`, `webdriver.findElement()`, `webdriver.controlFlow()`)
@@ -29,6 +27,6 @@ Extracted from `locators.js`:
 
 ### Generating the documentation
 
-Generated using [jsdoc-toolkit](https://code.google.com/p/jsdoc-toolkit/) v2.4.0 (This version of jsdoc toolkit is deprecated, but v3.0 couldn't fully parse the API). Command used:
+Generated using [jsdoc-toolkit](https://code.google.com/p/jsdoc-toolkit/) v2.4.0 (This version of jsdoc toolkit is deprecated, but v3.0 doesn't fully parse the API).
 
     java -jar jsrun.jar app/run.js -a -t=templates/jsdoc /selenium-webdriver/**/**/*.js
