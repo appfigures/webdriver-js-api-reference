@@ -5,9 +5,8 @@ One day we were writing integration tests using [Protractor](https://github.com/
 #### Not sure where to start? Try these areas of interest:
 - [webdriver.WebDriver](http://appfigures.github.io/webdriver-js-api-reference/symbols/webdriver.WebDriver.html) - The object exposed by `webdriver` (for documentation on methods like `webdriver.get()`, `webdriver.findElement()`, `webdriver.controlFlow()`)
 - [webdriver.WebElement](http://appfigures.github.io/webdriver-js-api-reference/symbols/webdriver.WebElement.html) - Represents an element in the DOM such as the return value of `webdriver.findElement()`.
-- Here is the definition for all the available locators available on `driver.By` (eg `driver.By.css('#item1')`).
 
-Extracted from `locators.js`:
+Here is the definition for all the available locators available on `driver.By` (eg `driver.By.css('#item1')`). Extracted from `locators.js`:
 
     webdriver.Locator.Strategy = {
         'className': webdriver.Locator.factory_('class name'),
