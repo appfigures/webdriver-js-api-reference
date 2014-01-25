@@ -1,6 +1,6 @@
 ### API documentation for Selenium WebDriver JS
 
-One day we were writing integration tests using [Protractor](https://github.com/angular/protractor) or [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs) and simply couldn't find a proper API reference so we generated it: http://appfigures.github.io/webdriver-js-api-reference.
+One day we were writing integration tests using [Protractor](https://github.com/angular/protractor) and [WebDriverJS](https://code.google.com/p/selenium/wiki/WebDriverJs) and simply couldn't find a proper API reference, so we generated it: http://appfigures.github.io/webdriver-js-api-reference.
 
 #### Not sure where to start? Try these areas of interest:
 - [webdriver.WebDriver](http://appfigures.github.io/webdriver-js-api-reference/symbols/webdriver.WebDriver.html) - The object exposed by `webdriver` (for documentation on methods like `webdriver.get()`, `webdriver.findElement()`, `webdriver.controlFlow()`)
