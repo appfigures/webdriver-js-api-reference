@@ -1,0 +1,1036 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - webdriver.promise.ControlFlow</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/bot.Error.html">bot.Error</a></li>
+	
+	<li><a href="../symbols/Build.html">Build</a></li>
+	
+	<li><a href="../symbols/goog.inherits-tempCtor.html">goog.inherits-tempCtor</a></li>
+	
+	<li><a href="../symbols/Server.html">Server</a></li>
+	
+	<li><a href="../symbols/TestEnvironment.html">TestEnvironment</a></li>
+	
+	<li><a href="../symbols/webdriver.AbstractBuilder.html">webdriver.AbstractBuilder</a></li>
+	
+	<li><a href="../symbols/webdriver.ActionSequence.html">webdriver.ActionSequence</a></li>
+	
+	<li><a href="../symbols/webdriver.Alert.html">webdriver.Alert</a></li>
+	
+	<li><a href="../symbols/webdriver.Builder.html">webdriver.Builder</a></li>
+	
+	<li><a href="../symbols/webdriver.Capabilities.html">webdriver.Capabilities</a></li>
+	
+	<li><a href="../symbols/webdriver.Command.html">webdriver.Command</a></li>
+	
+	<li><a href="../symbols/webdriver.EventEmitter.html">webdriver.EventEmitter</a></li>
+	
+	<li><a href="../symbols/webdriver.FirefoxDomExecutor.html">webdriver.FirefoxDomExecutor</a></li>
+	
+	<li><a href="../symbols/webdriver.Locator.html">webdriver.Locator</a></li>
+	
+	<li><a href="../symbols/webdriver.logging.Entry.html">webdriver.logging.Entry</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.Deferred.html">webdriver.promise.Deferred</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a></li>
+	
+	<li><a href="../symbols/webdriver.Session.html">webdriver.Session</a></li>
+	
+	<li><a href="../symbols/webdriver.stacktrace.Frame.html">webdriver.stacktrace.Frame</a></li>
+	
+	<li><a href="../symbols/webdriver.stacktrace.Snapshot.html">webdriver.stacktrace.Snapshot</a></li>
+	
+	<li><a href="../symbols/webdriver.UnhandledAlertError.html">webdriver.UnhandledAlertError</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Logs.html">webdriver.WebDriver.Logs</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Navigation.html">webdriver.WebDriver.Navigation</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Options.html">webdriver.WebDriver.Options</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.TargetLocator.html">webdriver.WebDriver.TargetLocator</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Timeouts.html">webdriver.WebDriver.Timeouts</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Window.html">webdriver.WebDriver.Window</a></li>
+	
+	<li><a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class webdriver.promise.ControlFlow
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				<br />Extends
+					.<br />
+				
+			
+				
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/_selenium-webdriver_lib_webdriver_promise.js.html">promise.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class webdriver.promise.ControlFlow.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/webdriver.promise.ControlFlow.html#constructor">webdriver.promise.ControlFlow</a></b>(opt_timer)
+							</div>
+							<div class="description">Handles the execution of scheduled tasks, each of which may be an
+asynchronous operation.</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class webdriver.promise.ControlFlow.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								webdriver.promise.ControlFlow.<b><a href="../symbols/webdriver.promise.ControlFlow.html#.defaultTimer">defaultTimer</a></b>
+								</div>
+								<div class="description">The default timer object, which uses the global timer functions.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								webdriver.promise.ControlFlow.<b><a href="../symbols/webdriver.promise.ControlFlow.html#.EVENT_LOOP_FREQUENCY">EVENT_LOOP_FREQUENCY</a></b>
+								</div>
+								<div class="description">How often, in milliseconds, the event loop should run.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								webdriver.promise.ControlFlow.<b><a href="../symbols/webdriver.promise.ControlFlow.html#.EventType">EventType</a></b>
+								</div>
+								<div class="description">Events that may be emitted by an <a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a>.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/webdriver.promise.ControlFlow.html#timer">timer</a></b>
+								</div>
+								<div class="description">The timer used by this instance.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class webdriver.promise.ControlFlow.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.ControlFlow.html#annotateError">annotateError</a></b>(e)
+								</div>
+								<div class="description">Appends a summary of this instance's recent task history to the given
+error's stack trace.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.ControlFlow.html#await">await</a></b>(promise)
+								</div>
+								<div class="description">Schedules a task that will wait for another promise to resolve.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.ControlFlow.html#clearHistory">clearHistory</a></b>()
+								</div>
+								<div class="description">Clears this instance's task history.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.ControlFlow.html#execute">execute</a></b>(fn, opt_description)
+								</div>
+								<div class="description">Schedules a task for execution.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.ControlFlow.html#getHistory">getHistory</a></b>()
+								</div>
+								<div class="description">Returns a summary of the recent task activity for this instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.ControlFlow.html#getSchedule">getSchedule</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.ControlFlow.html#reset">reset</a></b>()
+								</div>
+								<div class="description">Resets this instance, clearing its queue and removing all event listeners.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.ControlFlow.html#timeout">timeout</a></b>(ms, opt_description)
+								</div>
+								<div class="description">Inserts a {@code setTimeout} into the command queue.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.ControlFlow.html#wait">wait</a></b>(condition, timeout, opt_message)
+								</div>
+								<div class="description">Schedules a task that shall wait for a condition to hold.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>webdriver.promise.ControlFlow</b>(opt_timer)
+				</div>
+				
+				<div class="description">
+					Handles the execution of scheduled tasks, each of which may be an
+asynchronous operation. The control flow will ensure tasks are executed in
+the ordered scheduled, starting each task only once those before it have
+completed.
+
+<p>Each task scheduled within this flow may return a
+<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a> to indicate it is an asynchronous
+operation. The ControlFlow will wait for such promises to be resolved before
+marking the task as completed.
+
+<p>Tasks and each callback registered on a <a href="../symbols/webdriver.promise.Deferred.html">webdriver.promise.Deferred</a>
+will be run in their own ControlFlow frame.  Any tasks scheduled within a
+frame will have priority over previously scheduled tasks. Furthermore, if
+any of the tasks in the frame fails, the remainder of the tasks in that frame
+will be discarded and the failure will be propagated to the user through the
+callback/task's promised result.
+
+<p>Each time a ControlFlow empties its task queue, it will fire an
+<a href="../symbols/webdriver.promise.ControlFlow.EventType.html#.IDLE">webdriver.promise.ControlFlow.EventType.IDLE</a> event. Conversely,
+whenever the flow terminates due to an unhandled error, it will remove all
+remaining tasks in its queue and fire an
+<a href="../symbols/webdriver.promise.ControlFlow.EventType.html#.UNCAUGHT_EXCEPTION">webdriver.promise.ControlFlow.EventType.UNCAUGHT_EXCEPTION</a> event. If
+there are no listeners registered with the flow, the error will be
+rethrown to the global error handler.
+					
+				</div>
+				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{webdriver.promise.ControlFlow.Timer=}</span>  <b>opt_timer</b>
+								
+							</dt>
+								<dd>The timer object
+    to use. Should only be set for testing.</dd>
+						
+						</dl>
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name=".defaultTimer"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">webdriver.promise.ControlFlow.</span><b>defaultTimer</b>
+					
+					</div>
+					<div class="description">
+						The default timer object, which uses the global timer functions.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".EVENT_LOOP_FREQUENCY"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">webdriver.promise.ControlFlow.</span><b>EVENT_LOOP_FREQUENCY</b>
+					
+					</div>
+					<div class="description">
+						How often, in milliseconds, the event loop should run.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".EventType"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">webdriver.promise.ControlFlow.</span><b>EventType</b>
+					
+					</div>
+					<div class="description">
+						Events that may be emitted by an <a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a>.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="timer"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>timer</b>
+					
+					</div>
+					<div class="description">
+						The timer used by this instance.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="annotateError"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!(Error|goog.testing.JsUnitException)}</span>
+					<b>annotateError</b>(e)
+					
+					</div>
+					<div class="description">
+						Appends a summary of this instance's recent task history to the given
+error's stack trace. This function will also ensure the error's stack trace
+is in canonical form.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!(Error|goog.testing.JsUnitException)}</span> <b>e</b>
+									
+								</dt>
+								<dd>The error to annotate.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!(Error|goog.testing.JsUnitException)}</span> The annotated error.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="await"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>await</b>(promise)
+					
+					</div>
+					<div class="description">
+						Schedules a task that will wait for another promise to resolve.  The resolved
+promise's value will be returned as the task result.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> <b>promise</b>
+									
+								</dt>
+								<dd>The promise to wait on.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will resolve when the
+    task has completed.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="clearHistory"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>clearHistory</b>()
+					
+					</div>
+					<div class="description">
+						Clears this instance's task history.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="execute"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>execute</b>(fn, opt_description)
+					
+					</div>
+					<div class="description">
+						Schedules a task for execution. If there is nothing currently in the
+queue, the task will be executed in the next turn of the event loop.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!Function}</span> <b>fn</b>
+									
+								</dt>
+								<dd>The function to call to start the task. If the
+    function returns a <a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>, this instance
+    will wait for it to be resolved before starting the next task.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{string=}</span> <b>opt_description</b>
+									
+								</dt>
+								<dd>A description of the task.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with
+    the result of the action.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getHistory"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!Array.<string>}</span>
+					<b>getHistory</b>()
+					
+					</div>
+					<div class="description">
+						Returns a summary of the recent task activity for this instance. This
+includes the most recently completed task, as well as any parent tasks. In
+the returned summary, the task at index N is considered a sub-task of the
+task at index N+1.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!Array.<string>}</span> A summary of this instance's recent task
+    activity.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getSchedule"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string}</span>
+					<b>getSchedule</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{string}</span> The scheduled tasks still pending with this instance.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="reset"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>reset</b>()
+					
+					</div>
+					<div class="description">
+						Resets this instance, clearing its queue and removing all event listeners.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="timeout"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>timeout</b>(ms, opt_description)
+					
+					</div>
+					<div class="description">
+						Inserts a {@code setTimeout} into the command queue. This is equivalent to
+a thread sleep in a synchronous programming language.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{number}</span> <b>ms</b>
+									
+								</dt>
+								<dd>The timeout delay, in milliseconds.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{string=}</span> <b>opt_description</b>
+									
+								</dt>
+								<dd>A description to accompany the timeout.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with
+    the result of the action.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="wait"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>wait</b>(condition, timeout, opt_message)
+					
+					</div>
+					<div class="description">
+						Schedules a task that shall wait for a condition to hold. Each condition
+function may return any value, but it will always be evaluated as a boolean.
+
+<p>Condition functions may schedule sub-tasks with this instance, however,
+their execution time will be factored into whether a wait has timed out.
+
+<p>In the event a condition returns a Promise, the polling loop will wait for
+it to be resolved before evaluating whether the condition has been satisfied.
+The resolution time for a promise is factored into whether a wait has timed
+out.
+
+<p>If the condition function throws, or returns a rejected promise, the
+wait task will fail.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!Function}</span> <b>condition</b>
+									
+								</dt>
+								<dd>The condition function to poll.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{number}</span> <b>timeout</b>
+									
+								</dt>
+								<dd>How long to wait, in milliseconds, for the condition
+    to hold before timing out.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{string=}</span> <b>opt_message</b>
+									
+								</dt>
+								<dd>An optional error message to include if the
+    wait times out; defaults to the empty string.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when the
+    condition has been satisified. The promise shall be rejected if the wait
+    times out waiting for the condition.</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Jan 25 2014 14:08:12 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

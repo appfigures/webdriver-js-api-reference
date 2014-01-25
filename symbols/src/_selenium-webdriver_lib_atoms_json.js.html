@@ -1,0 +1,86 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">// Copyright 2012 WebDriver committers</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="COMM">// Copyright 2012 Google Inc.</span><span class="WHIT">
+<span class='line'>  3</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="COMM">// Licensed under the Apache License, Version 2.0 (the "License");</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="COMM">// you may not use this file except in compliance with the License.</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="COMM">// You may obtain a copy of the License at</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="COMM">//      http://www.apache.org/licenses/LICENSE-2.0</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="COMM">// Unless required by applicable law or agreed to in writing, software</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="COMM">// distributed under the License is distributed on an "AS IS" BASIS,</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="COMM">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="COMM">// See the License for the specific language governing permissions and</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="COMM">// limitations under the License.</span><span class="WHIT">
+<span class='line'> 15</span> 
+<span class='line'> 16</span> </span><span class="COMM">/**
+<span class='line'> 17</span>  * @fileoverview Provides JSON utilities that uses native JSON parsing where
+<span class='line'> 18</span>  * possible (a feature not currently offered by Closure).
+<span class='line'> 19</span>  */</span><span class="WHIT">
+<span class='line'> 20</span> 
+<span class='line'> 21</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'bot.json'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 22</span> 
+<span class='line'> 23</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'bot.userAgent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'goog.json'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'goog.userAgent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 26</span> 
+<span class='line'> 27</span> 
+<span class='line'> 28</span> </span><span class="COMM">/**
+<span class='line'> 29</span>  * @define {boolean} NATIVE_JSON indicates whether the code should rely on the
+<span class='line'> 30</span>  * native {@code JSON} functions, if available.
+<span class='line'> 31</span>  *
+<span class='line'> 32</span>  * &lt;p>The JSON functions can be defined by external libraries like Prototype
+<span class='line'> 33</span>  * and setting this flag to false forces the use of Closure's goog.json
+<span class='line'> 34</span>  * implementation.
+<span class='line'> 35</span>  *
+<span class='line'> 36</span>  * &lt;p>If your JavaScript can be loaded by a third_party site and you are wary
+<span class='line'> 37</span>  * about relying on the native functions, specify
+<span class='line'> 38</span>  * "--define bot.json.NATIVE_JSON=false" to the Closure compiler.
+<span class='line'> 39</span>  */</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="NAME">bot.json.NATIVE_JSON</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 41</span> 
+<span class='line'> 42</span> 
+<span class='line'> 43</span> </span><span class="COMM">/**
+<span class='line'> 44</span>  * Whether the current browser supports the native JSON interface.
+<span class='line'> 45</span>  * @const
+<span class='line'> 46</span>  * @see http://caniuse.com/#search=JSON
+<span class='line'> 47</span>  * @private {boolean}
+<span class='line'> 48</span>  */</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="NAME">bot.json.SUPPORTS_NATIVE_JSON_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">    </span><span class="COMM">// List WebKit and Opera first since every supported version of these</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">    </span><span class="COMM">// browsers supports native JSON (and we can compile away large chunks of</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">    </span><span class="COMM">// code for individual fragments by setting the appropriate compiler flags).</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">    </span><span class="NAME">goog.userAgent.WEBKIT</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">goog.userAgent.OPERA</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">        </span><span class="PUNC">(</span><span class="NAME">goog.userAgent.GECKO</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">bot.userAgent.isEngineVersion</span><span class="PUNC">(</span><span class="NUMB">3.5</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">        </span><span class="PUNC">(</span><span class="NAME">goog.userAgent.IE</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">bot.userAgent.isEngineVersion</span><span class="PUNC">(</span><span class="NUMB">8</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 56</span> 
+<span class='line'> 57</span> 
+<span class='line'> 58</span> </span><span class="COMM">/**
+<span class='line'> 59</span>  * Converts a JSON object to its string representation.
+<span class='line'> 60</span>  * @param {*} jsonObj The input object.
+<span class='line'> 61</span>  * @param {?(function(string, *): *)=} opt_replacer A replacer function called
+<span class='line'> 62</span>  *     for each (key, value) pair that determines how the value should be
+<span class='line'> 63</span>  *     serialized. By default, this just returns the value and allows default
+<span class='line'> 64</span>  *     serialization to kick in.
+<span class='line'> 65</span>  * @return {string} A JSON string representation of the input object.
+<span class='line'> 66</span>  */</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="NAME">bot.json.stringify</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">bot.json.NATIVE_JSON</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">bot.json.SUPPORTS_NATIVE_JSON_</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">    </span><span class="NAME">JSON.stringify</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">goog.json.serialize</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> 
+<span class='line'> 70</span> 
+<span class='line'> 71</span> </span><span class="COMM">/**
+<span class='line'> 72</span>  * Parses a JSON string and returns the result.
+<span class='line'> 73</span>  * @param {string} jsonStr The string to parse.
+<span class='line'> 74</span>  * @return {*} The JSON object.
+<span class='line'> 75</span>  * @throws {Error} If the input string is an invalid JSON string.
+<span class='line'> 76</span>  */</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="NAME">bot.json.parse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">bot.json.NATIVE_JSON</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">bot.json.SUPPORTS_NATIVE_JSON_</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">    </span><span class="NAME">JSON.parse</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">goog.json.parse</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span></pre></body></html>

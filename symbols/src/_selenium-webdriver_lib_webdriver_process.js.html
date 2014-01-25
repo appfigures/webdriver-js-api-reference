@@ -1,0 +1,128 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">// Copyright 2011 Software Freedom Conservancy. All Rights Reserved.</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  3</span> </span><span class="COMM">// Licensed under the Apache License, Version 2.0 (the "License");</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="COMM">// you may not use this file except in compliance with the License.</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="COMM">// You may obtain a copy of the License at</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="COMM">//      http://www.apache.org/licenses/LICENSE-2.0</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="COMM">// Unless required by applicable law or agreed to in writing, software</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="COMM">// distributed under the License is distributed on an "AS IS" BASIS,</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="COMM">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="COMM">// See the License for the specific language governing permissions and</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="COMM">// limitations under the License.</span><span class="WHIT">
+<span class='line'> 14</span> 
+<span class='line'> 15</span> </span><span class="COMM">/**
+<span class='line'> 16</span>  * @fileoverview Provides access to the current process' environment variables.
+<span class='line'> 17</span>  * When running in node, this is simply a wrapper for {@code process.env}.
+<span class='line'> 18</span>  * When running in a browser, environment variables are loaded by parsing the
+<span class='line'> 19</span>  * current URL's query string. Variables that have more than one variable will
+<span class='line'> 20</span>  * be initialized to the JSON representation of the array of all values,
+<span class='line'> 21</span>  * otherwise the variable will be initialized to a sole string value. If a
+<span class='line'> 22</span>  * variable does not have any values, but is nonetheless present in the query
+<span class='line'> 23</span>  * string, it will be initialized to an empty string.
+<span class='line'> 24</span>  * After the initial parsing, environment variables must be queried and set
+<span class='line'> 25</span>  * through the API defined in this file.
+<span class='line'> 26</span>  */</span><span class="WHIT">
+<span class='line'> 27</span> 
+<span class='line'> 28</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'webdriver.process'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 29</span> 
+<span class='line'> 30</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'goog.Uri'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'goog.array'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'goog.json'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 33</span> 
+<span class='line'> 34</span> 
+<span class='line'> 35</span> </span><span class="COMM">/**
+<span class='line'> 36</span>  * @return {boolean} Whether the current process is Node's native process
+<span class='line'> 37</span>  *     object.
+<span class='line'> 38</span>  */</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="NAME">webdriver.process.isNative</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">webdriver.process.IS_NATIVE_PROCESS_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 42</span> 
+<span class='line'> 43</span> 
+<span class='line'> 44</span> </span><span class="COMM">/**
+<span class='line'> 45</span>  * Queries for a named environment variable.
+<span class='line'> 46</span>  * @param {string} name The name of the environment variable to look up.
+<span class='line'> 47</span>  * @param {string=} opt_default The default value if the named variable is not
+<span class='line'> 48</span>  *     defined.
+<span class='line'> 49</span>  * @return {string} The queried environment variable.
+<span class='line'> 50</span>  */</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="NAME">webdriver.process.getEnv</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_default</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.process.PROCESS_.env</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">goog.isDefAndNotNull</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">opt_default</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 55</span> 
+<span class='line'> 56</span> 
+<span class='line'> 57</span> </span><span class="COMM">/**
+<span class='line'> 58</span>  * Sets an environment value. If the new value is either null or undefined, the
+<span class='line'> 59</span>  *     environment variable will be cleared.
+<span class='line'> 60</span>  * @param {string} name The value to set.
+<span class='line'> 61</span>  * @param {*} value The new value; will be coerced to a string.
+<span class='line'> 62</span>  */</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="NAME">webdriver.process.setEnv</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">  </span><span class="NAME">webdriver.process.PROCESS_.env</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">      </span><span class="NAME">goog.isDefAndNotNull</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 67</span> 
+<span class='line'> 68</span> 
+<span class='line'> 69</span> </span><span class="COMM">/**
+<span class='line'> 70</span>  * Whether the current environment is using Node's native process object.
+<span class='line'> 71</span>  * @private {boolean}
+<span class='line'> 72</span>  * @const
+<span class='line'> 73</span>  */</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="NAME">webdriver.process.IS_NATIVE_PROCESS_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">process</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 75</span> 
+<span class='line'> 76</span> 
+<span class='line'> 77</span> </span><span class="COMM">/**
+<span class='line'> 78</span>  * Initializes a process object for use in a browser window.
+<span class='line'> 79</span>  * @param {!Window=} opt_window The window object to initialize the process
+<span class='line'> 80</span>  *     from; if not specified, will default to the current window. Should only
+<span class='line'> 81</span>  *     be set for unit testing.
+<span class='line'> 82</span>  * @return {!Object} The new process object.
+<span class='line'> 83</span>  * @private
+<span class='line'> 84</span>  */</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="NAME">webdriver.process.initBrowserProcess_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">opt_window</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">process</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="STRN">'env'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 87</span> 
+<span class='line'> 88</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">win</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">opt_window</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">win</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">window</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">    </span><span class="NAME">win</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">window</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 92</span> 
+<span class='line'> 93</span> </span><span class="WHIT">  </span><span class="COMM">// Initialize the global error handler.</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">win</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="COMM">// Initialize the environment variable map by parsing the current URL query</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">    </span><span class="COMM">// string.</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">win.location</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">goog.Uri</span><span class="PUNC">(</span><span class="NAME">win.location</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">getQueryData</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">      </span><span class="NAME">goog.array.forEach</span><span class="PUNC">(</span><span class="NAME">data.getKeys</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">values</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">data.getValues</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">        </span><span class="NAME">process.env</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">values.length</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">                           </span><span class="NAME">values.length</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">values</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">                           </span><span class="NAME">goog.json.serialize</span><span class="PUNC">(</span><span class="NAME">values</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>107</span> 
+<span class='line'>108</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">process</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>110</span> 
+<span class='line'>111</span> 
+<span class='line'>112</span> </span><span class="COMM">/**
+<span class='line'>113</span>  * The global process object to use. Will either be Node's global
+<span class='line'>114</span>  * {@code process} object, or an approximation of it for use in a browser
+<span class='line'>115</span>  * environment.
+<span class='line'>116</span>  * @private {!Object}
+<span class='line'>117</span>  * @const
+<span class='line'>118</span>  */</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="NAME">webdriver.process.PROCESS_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.process.IS_NATIVE_PROCESS_</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">process</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.process.initBrowserProcess_</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>121</span> </span></pre></body></html>

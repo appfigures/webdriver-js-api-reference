@@ -1,0 +1,364 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">// Copyright 2012 Selenium comitters</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="COMM">// Copyright 2012 Software Freedom Conservancy</span><span class="WHIT">
+<span class='line'>  3</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="COMM">// Licensed under the Apache License, Version 2.0 (the "License");</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="COMM">// you may not use this file except in compliance with the License.</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="COMM">// You may obtain a copy of the License at</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="COMM">//      http://www.apache.org/licenses/LICENSE-2.0</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="COMM">// Unless required by applicable law or agreed to in writing, software</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="COMM">// distributed under the License is distributed on an "AS IS" BASIS,</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="COMM">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="COMM">// See the License for the specific language governing permissions and</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="COMM">// limitations under the License.</span><span class="WHIT">
+<span class='line'> 15</span> 
+<span class='line'> 16</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'webdriver.ActionSequence'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 17</span> 
+<span class='line'> 18</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'goog.array'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'webdriver.Button'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'webdriver.Command'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'webdriver.CommandName'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'webdriver.Key'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 23</span> 
+<span class='line'> 24</span> 
+<span class='line'> 25</span> 
+<span class='line'> 26</span> </span><span class="COMM">/**
+<span class='line'> 27</span>  * Class for defining sequences of complex user interactions. Each sequence
+<span class='line'> 28</span>  * will not be executed until {@link #perform} is called.
+<span class='line'> 29</span>  *
+<span class='line'> 30</span>  * &lt;p>Example:&lt;pre>&lt;code>
+<span class='line'> 31</span>  *   new webdriver.ActionSequence(driver).
+<span class='line'> 32</span>  *       keyDown(webdriver.Key.SHIFT).
+<span class='line'> 33</span>  *       click(element1).
+<span class='line'> 34</span>  *       click(element2).
+<span class='line'> 35</span>  *       dragAndDrop(element3, element4).
+<span class='line'> 36</span>  *       keyUp(webdriver.Key.SHIFT).
+<span class='line'> 37</span>  *       perform();
+<span class='line'> 38</span>  * &lt;/pre>&lt;/code>
+<span class='line'> 39</span>  *
+<span class='line'> 40</span>  * @param {!webdriver.WebDriver} driver The driver instance to use.
+<span class='line'> 41</span>  * @constructor
+<span class='line'> 42</span>  */</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="NAME">webdriver.ActionSequence</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">driver</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 44</span> 
+<span class='line'> 45</span> </span><span class="WHIT">  </span><span class="COMM">/** @private {!webdriver.WebDriver} */</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">  </span><span class="NAME">this.driver_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">driver</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 47</span> 
+<span class='line'> 48</span> </span><span class="WHIT">  </span><span class="COMM">/** @private {!Array.&lt;{description: string, command: !webdriver.Command}>} */</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">  </span><span class="NAME">this.actions_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> 
+<span class='line'> 52</span> 
+<span class='line'> 53</span> </span><span class="COMM">/**
+<span class='line'> 54</span>  * Schedules an action to be executed each time {@link #perform} is called on
+<span class='line'> 55</span>  * this instance.
+<span class='line'> 56</span>  * @param {string} description A description of the command.
+<span class='line'> 57</span>  * @param {!webdriver.Command} command The command.
+<span class='line'> 58</span>  * @private
+<span class='line'> 59</span>  */</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="NAME">webdriver.ActionSequence.prototype.schedule_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">description</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">command</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">  </span><span class="NAME">this.actions_.push</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">    </span><span class="NAME">description</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">description</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">    </span><span class="NAME">command</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">command</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> 
+<span class='line'> 67</span> 
+<span class='line'> 68</span> </span><span class="COMM">/**
+<span class='line'> 69</span>  * Executes this action sequence.
+<span class='line'> 70</span>  * @return {!webdriver.promise.Promise} A promise that will be resolved once
+<span class='line'> 71</span>  *     this sequence has completed.
+<span class='line'> 72</span>  */</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="NAME">webdriver.ActionSequence.prototype.perform</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">  </span><span class="COMM">// Make a protected copy of the scheduled actions. This will protect against</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">  </span><span class="COMM">// users defining additional commands before this sequence is actually</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">  </span><span class="COMM">// executed.</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">actions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.array.clone</span><span class="PUNC">(</span><span class="NAME">this.actions_</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">driver</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.driver_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">driver.controlFlow</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">execute</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">    </span><span class="NAME">goog.array.forEach</span><span class="PUNC">(</span><span class="NAME">actions</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">action</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">      </span><span class="NAME">driver.schedule</span><span class="PUNC">(</span><span class="NAME">action.command</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">action.description</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'ActionSequence.perform'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 85</span> 
+<span class='line'> 86</span> 
+<span class='line'> 87</span> </span><span class="COMM">/**
+<span class='line'> 88</span>  * Moves the mouse.  The location to move to may be specified in terms of the
+<span class='line'> 89</span>  * mouse's current location, an offset relative to the top-left corner of an
+<span class='line'> 90</span>  * element, or an element (in which case the middle of the element is used).
+<span class='line'> 91</span>  * @param {(!webdriver.WebElement|{x: number, y: number})} location The
+<span class='line'> 92</span>  *     location to drag to, as either another WebElement or an offset in pixels.
+<span class='line'> 93</span>  * @param {{x: number, y: number}=} opt_offset If the target {@code location}
+<span class='line'> 94</span>  *     is defined as a {@link webdriver.WebElement}, this parameter defines an
+<span class='line'> 95</span>  *     offset within that element. The offset should be specified in pixels
+<span class='line'> 96</span>  *     relative to the top-left corner of the element's bounding box. If
+<span class='line'> 97</span>  *     omitted, the element's center will be used as the target offset.
+<span class='line'> 98</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'> 99</span>  */</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="NAME">webdriver.ActionSequence.prototype.mouseMove</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">location</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_offset</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">command</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.Command</span><span class="PUNC">(</span><span class="NAME">webdriver.CommandName.MOVE_TO</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> 
+<span class='line'>103</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">goog.isNumber</span><span class="PUNC">(</span><span class="NAME">location.x</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">    </span><span class="NAME">setOffset</span><span class="PUNC">(</span><span class="COMM">/** @type {{x: number, y: number}} */</span><span class="PUNC">(</span><span class="NAME">location</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">    </span><span class="COMM">// The interactions API expect the element ID to be encoded as a simple</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">    </span><span class="COMM">// string, not the usual JSON object.</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="COMM">/** @type {!webdriver.WebElement} */</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">location</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">toWireValue</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">        </span><span class="NAME">then</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">          </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">[</span><span class="STRN">'ELEMENT'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>111</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="WHIT">    </span><span class="NAME">command.setParameter</span><span class="PUNC">(</span><span class="STRN">'element'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">opt_offset</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">      </span><span class="NAME">setOffset</span><span class="PUNC">(</span><span class="NAME">opt_offset</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>117</span> 
+<span class='line'>118</span> </span><span class="WHIT">  </span><span class="NAME">this.schedule_</span><span class="PUNC">(</span><span class="STRN">'mouseMove'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">command</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>120</span> 
+<span class='line'>121</span> </span><span class="WHIT">  </span><span class="COMM">/** @param {{x: number, y: number}} offset The offset to use. */</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">setOffset</span><span class="PUNC">(</span><span class="NAME">offset</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">    </span><span class="NAME">command.setParameter</span><span class="PUNC">(</span><span class="STRN">'xoffset'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">offset.x</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">    </span><span class="NAME">command.setParameter</span><span class="PUNC">(</span><span class="STRN">'yoffset'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">offset.y</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>127</span> 
+<span class='line'>128</span> 
+<span class='line'>129</span> </span><span class="COMM">/**
+<span class='line'>130</span>  * Schedules a mouse action.
+<span class='line'>131</span>  * @param {string} description A simple descriptive label for the scheduled
+<span class='line'>132</span>  *     action.
+<span class='line'>133</span>  * @param {!webdriver.CommandName} commandName The name of the command.
+<span class='line'>134</span>  * @param {(webdriver.WebElement|webdriver.Button)=} opt_elementOrButton Either
+<span class='line'>135</span>  *     the element to interact with or the button to click with.
+<span class='line'>136</span>  *     Defaults to {@link webdriver.Button.LEFT} if neither an element nor
+<span class='line'>137</span>  *     button is specified.
+<span class='line'>138</span>  * @param {webdriver.Button=} opt_button The button to use. Defaults to
+<span class='line'>139</span>  *     {@link webdriver.Button.LEFT}. Ignored if the previous argument is
+<span class='line'>140</span>  *     provided as a button.
+<span class='line'>141</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'>142</span>  * @private
+<span class='line'>143</span>  */</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="NAME">webdriver.ActionSequence.prototype.scheduleMouseAction_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">    </span><span class="NAME">description</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">commandName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_elementOrButton</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_button</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">button</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">goog.isNumber</span><span class="PUNC">(</span><span class="NAME">opt_elementOrButton</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">    </span><span class="NAME">button</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">opt_elementOrButton</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">opt_elementOrButton</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">      </span><span class="NAME">this.mouseMove</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">          </span><span class="COMM">/** @type {!webdriver.WebElement} */</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">opt_elementOrButton</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">    </span><span class="NAME">button</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.isDef</span><span class="PUNC">(</span><span class="NAME">opt_button</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">opt_button</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">webdriver.Button.LEFT</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>155</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>156</span> 
+<span class='line'>157</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">command</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.Command</span><span class="PUNC">(</span><span class="NAME">commandName</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">      </span><span class="NAME">setParameter</span><span class="PUNC">(</span><span class="STRN">'button'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">button</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">  </span><span class="NAME">this.schedule_</span><span class="PUNC">(</span><span class="NAME">description</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">command</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>161</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>162</span> 
+<span class='line'>163</span> 
+<span class='line'>164</span> </span><span class="COMM">/**
+<span class='line'>165</span>  * Presses a mouse button. The mouse button will not be released until
+<span class='line'>166</span>  * {@link #mouseUp} is called, regardless of whether that call is made in this
+<span class='line'>167</span>  * sequence or another. The behavior for out-of-order events (e.g. mouseDown,
+<span class='line'>168</span>  * click) is undefined.
+<span class='line'>169</span>  *
+<span class='line'>170</span>  * &lt;p>If an element is provided, the mouse will first be moved to the center
+<span class='line'>171</span>  * of that element. This is equivalent to:
+<span class='line'>172</span>  * &lt;pre>&lt;code>sequence.mouseMove(element).mouseDown()&lt;/code>&lt;/pre>
+<span class='line'>173</span>  *
+<span class='line'>174</span>  * &lt;p>Warning: this method currently only supports the left mouse button. See
+<span class='line'>175</span>  * http://code.google.com/p/selenium/issues/detail?id=4047
+<span class='line'>176</span>  *
+<span class='line'>177</span>  * @param {(webdriver.WebElement|webdriver.Button)=} opt_elementOrButton Either
+<span class='line'>178</span>  *     the element to interact with or the button to click with.
+<span class='line'>179</span>  *     Defaults to {@link webdriver.Button.LEFT} if neither an element nor
+<span class='line'>180</span>  *     button is specified.
+<span class='line'>181</span>  * @param {webdriver.Button=} opt_button The button to use. Defaults to
+<span class='line'>182</span>  *     {@link webdriver.Button.LEFT}. Ignored if a button is provided as the
+<span class='line'>183</span>  *     first argument.
+<span class='line'>184</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'>185</span>  */</span><span class="WHIT">
+<span class='line'>186</span> </span><span class="NAME">webdriver.ActionSequence.prototype.mouseDown</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">opt_elementOrButton</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>187</span> </span><span class="WHIT">                                                        </span><span class="NAME">opt_button</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>188</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.scheduleMouseAction_</span><span class="PUNC">(</span><span class="STRN">'mouseDown'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>189</span> </span><span class="WHIT">      </span><span class="NAME">webdriver.CommandName.MOUSE_DOWN</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_elementOrButton</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_button</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>190</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>191</span> 
+<span class='line'>192</span> 
+<span class='line'>193</span> </span><span class="COMM">/**
+<span class='line'>194</span>  * Releases a mouse button. Behavior is undefined for calling this function
+<span class='line'>195</span>  * without a previous call to {@link #mouseDown}.
+<span class='line'>196</span>  *
+<span class='line'>197</span>  * &lt;p>If an element is provided, the mouse will first be moved to the center
+<span class='line'>198</span>  * of that element. This is equivalent to:
+<span class='line'>199</span>  * &lt;pre>&lt;code>sequence.mouseMove(element).mouseUp()&lt;/code>&lt;/pre>
+<span class='line'>200</span>  *
+<span class='line'>201</span>  * &lt;p>Warning: this method currently only supports the left mouse button. See
+<span class='line'>202</span>  * http://code.google.com/p/selenium/issues/detail?id=4047
+<span class='line'>203</span>  *
+<span class='line'>204</span>  * @param {(webdriver.WebElement|webdriver.Button)=} opt_elementOrButton Either
+<span class='line'>205</span>  *     the element to interact with or the button to click with.
+<span class='line'>206</span>  *     Defaults to {@link webdriver.Button.LEFT} if neither an element nor
+<span class='line'>207</span>  *     button is specified.
+<span class='line'>208</span>  * @param {webdriver.Button=} opt_button The button to use. Defaults to
+<span class='line'>209</span>  *     {@link webdriver.Button.LEFT}. Ignored if a button is provided as the
+<span class='line'>210</span>  *     first argument.
+<span class='line'>211</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'>212</span>  */</span><span class="WHIT">
+<span class='line'>213</span> </span><span class="NAME">webdriver.ActionSequence.prototype.mouseUp</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">opt_elementOrButton</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>214</span> </span><span class="WHIT">                                                      </span><span class="NAME">opt_button</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>215</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.scheduleMouseAction_</span><span class="PUNC">(</span><span class="STRN">'mouseUp'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>216</span> </span><span class="WHIT">      </span><span class="NAME">webdriver.CommandName.MOUSE_UP</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_elementOrButton</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_button</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>217</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>218</span> 
+<span class='line'>219</span> 
+<span class='line'>220</span> </span><span class="COMM">/**
+<span class='line'>221</span>  * Convenience function for performing a "drag and drop" manuever. The target
+<span class='line'>222</span>  * element may be moved to the location of another element, or by an offset (in
+<span class='line'>223</span>  * pixels).
+<span class='line'>224</span>  * @param {!webdriver.WebElement} element The element to drag.
+<span class='line'>225</span>  * @param {(!webdriver.WebElement|{x: number, y: number})} location The
+<span class='line'>226</span>  *     location to drag to, either as another WebElement or an offset in pixels.
+<span class='line'>227</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'>228</span>  */</span><span class="WHIT">
+<span class='line'>229</span> </span><span class="NAME">webdriver.ActionSequence.prototype.dragAndDrop</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">location</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>230</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.mouseDown</span><span class="PUNC">(</span><span class="NAME">element</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">mouseMove</span><span class="PUNC">(</span><span class="NAME">location</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">mouseUp</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>231</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>232</span> 
+<span class='line'>233</span> 
+<span class='line'>234</span> </span><span class="COMM">/**
+<span class='line'>235</span>  * Clicks a mouse button.
+<span class='line'>236</span>  *
+<span class='line'>237</span>  * &lt;p>If an element is provided, the mouse will first be moved to the center
+<span class='line'>238</span>  * of that element. This is equivalent to:
+<span class='line'>239</span>  * &lt;pre>&lt;code>sequence.mouseMove(element).click()&lt;/code>&lt;/pre>
+<span class='line'>240</span>  *
+<span class='line'>241</span>  * @param {(webdriver.WebElement|webdriver.Button)=} opt_elementOrButton Either
+<span class='line'>242</span>  *     the element to interact with or the button to click with.
+<span class='line'>243</span>  *     Defaults to {@link webdriver.Button.LEFT} if neither an element nor
+<span class='line'>244</span>  *     button is specified.
+<span class='line'>245</span>  * @param {webdriver.Button=} opt_button The button to use. Defaults to
+<span class='line'>246</span>  *     {@link webdriver.Button.LEFT}. Ignored if a button is provided as the
+<span class='line'>247</span>  *     first argument.
+<span class='line'>248</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'>249</span>  */</span><span class="WHIT">
+<span class='line'>250</span> </span><span class="NAME">webdriver.ActionSequence.prototype.click</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">opt_elementOrButton</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">                                                    </span><span class="NAME">opt_button</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>252</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.scheduleMouseAction_</span><span class="PUNC">(</span><span class="STRN">'click'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>253</span> </span><span class="WHIT">      </span><span class="NAME">webdriver.CommandName.CLICK</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_elementOrButton</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_button</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>254</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>255</span> 
+<span class='line'>256</span> 
+<span class='line'>257</span> </span><span class="COMM">/**
+<span class='line'>258</span>  * Double-clicks a mouse button.
+<span class='line'>259</span>  *
+<span class='line'>260</span>  * &lt;p>If an element is provided, the mouse will first be moved to the center of
+<span class='line'>261</span>  * that element. This is equivalent to:
+<span class='line'>262</span>  * &lt;pre>&lt;code>sequence.mouseMove(element).doubleClick()&lt;/code>&lt;/pre>
+<span class='line'>263</span>  *
+<span class='line'>264</span>  * &lt;p>Warning: this method currently only supports the left mouse button. See
+<span class='line'>265</span>  * http://code.google.com/p/selenium/issues/detail?id=4047
+<span class='line'>266</span>  *
+<span class='line'>267</span>  * @param {(webdriver.WebElement|webdriver.Button)=} opt_elementOrButton Either
+<span class='line'>268</span>  *     the element to interact with or the button to click with.
+<span class='line'>269</span>  *     Defaults to {@link webdriver.Button.LEFT} if neither an element nor
+<span class='line'>270</span>  *     button is specified.
+<span class='line'>271</span>  * @param {webdriver.Button=} opt_button The button to use. Defaults to
+<span class='line'>272</span>  *     {@link webdriver.Button.LEFT}. Ignored if a button is provided as the
+<span class='line'>273</span>  *     first argument.
+<span class='line'>274</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'>275</span>  */</span><span class="WHIT">
+<span class='line'>276</span> </span><span class="NAME">webdriver.ActionSequence.prototype.doubleClick</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">opt_elementOrButton</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>277</span> </span><span class="WHIT">                                                          </span><span class="NAME">opt_button</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>278</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.scheduleMouseAction_</span><span class="PUNC">(</span><span class="STRN">'doubleClick'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>279</span> </span><span class="WHIT">      </span><span class="NAME">webdriver.CommandName.DOUBLE_CLICK</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_elementOrButton</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_button</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>280</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>281</span> 
+<span class='line'>282</span> 
+<span class='line'>283</span> </span><span class="COMM">/**
+<span class='line'>284</span>  * Schedules a keyboard action.
+<span class='line'>285</span>  * @param {string} description A simple descriptive label for the scheduled
+<span class='line'>286</span>  *     action.
+<span class='line'>287</span>  * @param {!Array.&lt;(string|!webdriver.Key)>} keys The keys to send.
+<span class='line'>288</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'>289</span>  * @private
+<span class='line'>290</span>  */</span><span class="WHIT">
+<span class='line'>291</span> </span><span class="NAME">webdriver.ActionSequence.prototype.scheduleKeyboardAction_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>292</span> </span><span class="WHIT">    </span><span class="NAME">description</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>293</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">command</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>294</span> </span><span class="WHIT">      </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.Command</span><span class="PUNC">(</span><span class="NAME">webdriver.CommandName.SEND_KEYS_TO_ACTIVE_ELEMENT</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="WHIT">
+<span class='line'>295</span> </span><span class="WHIT">          </span><span class="NAME">setParameter</span><span class="PUNC">(</span><span class="STRN">'value'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>296</span> </span><span class="WHIT">  </span><span class="NAME">this.schedule_</span><span class="PUNC">(</span><span class="NAME">description</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">command</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>297</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>298</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>299</span> 
+<span class='line'>300</span> 
+<span class='line'>301</span> </span><span class="COMM">/**
+<span class='line'>302</span>  * Checks that a key is a modifier key.
+<span class='line'>303</span>  * @param {!webdriver.Key} key The key to check.
+<span class='line'>304</span>  * @throws {Error} If the key is not a modifier key.
+<span class='line'>305</span>  * @private
+<span class='line'>306</span>  */</span><span class="WHIT">
+<span class='line'>307</span> </span><span class="NAME">webdriver.ActionSequence.checkModifierKey_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>308</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">key</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">webdriver.Key.ALT</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">key</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">webdriver.Key.CONTROL</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
+<span class='line'>309</span> </span><span class="WHIT">      </span><span class="NAME">key</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">webdriver.Key.SHIFT</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">key</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">webdriver.Key.COMMAND</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>310</span> </span><span class="WHIT">    </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'Not a modifier key'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>311</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>312</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>313</span> 
+<span class='line'>314</span> 
+<span class='line'>315</span> </span><span class="COMM">/**
+<span class='line'>316</span>  * Performs a modifier key press. The modifier key is &lt;em>not released&lt;/em>
+<span class='line'>317</span>  * until {@link #keyUp} or {@link #sendKeys} is called. The key press will be
+<span class='line'>318</span>  * targetted at the currently focused element.
+<span class='line'>319</span>  * @param {!webdriver.Key} key The modifier key to push. Must be one of
+<span class='line'>320</span>  *     {ALT, CONTROL, SHIFT, COMMAND, META}.
+<span class='line'>321</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'>322</span>  * @throws {Error} If the key is not a valid modifier key.
+<span class='line'>323</span>  */</span><span class="WHIT">
+<span class='line'>324</span> </span><span class="NAME">webdriver.ActionSequence.prototype.keyDown</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>325</span> </span><span class="WHIT">  </span><span class="NAME">webdriver.ActionSequence.checkModifierKey_</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>326</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.scheduleKeyboardAction_</span><span class="PUNC">(</span><span class="STRN">'keyDown'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>327</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>328</span> 
+<span class='line'>329</span> 
+<span class='line'>330</span> </span><span class="COMM">/**
+<span class='line'>331</span>  * Performs a modifier key release. The release is targetted at the currently
+<span class='line'>332</span>  * focused element.
+<span class='line'>333</span>  * @param {!webdriver.Key} key The modifier key to release. Must be one of
+<span class='line'>334</span>  *     {ALT, CONTROL, SHIFT, COMMAND, META}.
+<span class='line'>335</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'>336</span>  * @throws {Error} If the key is not a valid modifier key.
+<span class='line'>337</span>  */</span><span class="WHIT">
+<span class='line'>338</span> </span><span class="NAME">webdriver.ActionSequence.prototype.keyUp</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>339</span> </span><span class="WHIT">  </span><span class="NAME">webdriver.ActionSequence.checkModifierKey_</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>340</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.scheduleKeyboardAction_</span><span class="PUNC">(</span><span class="STRN">'keyUp'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>341</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>342</span> 
+<span class='line'>343</span> 
+<span class='line'>344</span> </span><span class="COMM">/**
+<span class='line'>345</span>  * Simulates typing multiple keys. Each modifier key encountered in the
+<span class='line'>346</span>  * sequence will not be released until it is encountered again. All key events
+<span class='line'>347</span>  * will be targetted at the currently focused element.
+<span class='line'>348</span>  * @param {...(string|!webdriver.Key|!Array.&lt;(string|!webdriver.Key)>)} var_args
+<span class='line'>349</span>  *     The keys to type.
+<span class='line'>350</span>  * @return {!webdriver.ActionSequence} A self reference.
+<span class='line'>351</span>  * @throws {Error} If the key is not a valid modifier key.
+<span class='line'>352</span>  */</span><span class="WHIT">
+<span class='line'>353</span> </span><span class="NAME">webdriver.ActionSequence.prototype.sendKeys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">var_args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>354</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.array.flatten</span><span class="PUNC">(</span><span class="NAME">goog.array.slice</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>355</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.scheduleKeyboardAction_</span><span class="PUNC">(</span><span class="STRN">'sendKeys'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>356</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>357</span> </span></pre></body></html>

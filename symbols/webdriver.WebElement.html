@@ -1,0 +1,1582 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - webdriver.WebElement</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/bot.Error.html">bot.Error</a></li>
+	
+	<li><a href="../symbols/Build.html">Build</a></li>
+	
+	<li><a href="../symbols/goog.inherits-tempCtor.html">goog.inherits-tempCtor</a></li>
+	
+	<li><a href="../symbols/Server.html">Server</a></li>
+	
+	<li><a href="../symbols/TestEnvironment.html">TestEnvironment</a></li>
+	
+	<li><a href="../symbols/webdriver.AbstractBuilder.html">webdriver.AbstractBuilder</a></li>
+	
+	<li><a href="../symbols/webdriver.ActionSequence.html">webdriver.ActionSequence</a></li>
+	
+	<li><a href="../symbols/webdriver.Alert.html">webdriver.Alert</a></li>
+	
+	<li><a href="../symbols/webdriver.Builder.html">webdriver.Builder</a></li>
+	
+	<li><a href="../symbols/webdriver.Capabilities.html">webdriver.Capabilities</a></li>
+	
+	<li><a href="../symbols/webdriver.Command.html">webdriver.Command</a></li>
+	
+	<li><a href="../symbols/webdriver.EventEmitter.html">webdriver.EventEmitter</a></li>
+	
+	<li><a href="../symbols/webdriver.FirefoxDomExecutor.html">webdriver.FirefoxDomExecutor</a></li>
+	
+	<li><a href="../symbols/webdriver.Locator.html">webdriver.Locator</a></li>
+	
+	<li><a href="../symbols/webdriver.logging.Entry.html">webdriver.logging.Entry</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.Deferred.html">webdriver.promise.Deferred</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a></li>
+	
+	<li><a href="../symbols/webdriver.Session.html">webdriver.Session</a></li>
+	
+	<li><a href="../symbols/webdriver.stacktrace.Frame.html">webdriver.stacktrace.Frame</a></li>
+	
+	<li><a href="../symbols/webdriver.stacktrace.Snapshot.html">webdriver.stacktrace.Snapshot</a></li>
+	
+	<li><a href="../symbols/webdriver.UnhandledAlertError.html">webdriver.UnhandledAlertError</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Logs.html">webdriver.WebDriver.Logs</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Navigation.html">webdriver.WebDriver.Navigation</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Options.html">webdriver.WebDriver.Options</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.TargetLocator.html">webdriver.WebDriver.TargetLocator</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Timeouts.html">webdriver.WebDriver.Timeouts</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Window.html">webdriver.WebDriver.Window</a></li>
+	
+	<li><a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class webdriver.WebElement
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				<br />Extends
+					.<br />
+				
+			
+				
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/_selenium-webdriver_lib_webdriver_webdriver.js.html">webdriver.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class webdriver.WebElement.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/webdriver.WebElement.html#constructor">webdriver.WebElement</a></b>(driver, id)
+							</div>
+							<div class="description">Represents a DOM element.</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class webdriver.WebElement.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								webdriver.WebElement.<b><a href="../symbols/webdriver.WebElement.html#.ELEMENT_KEY">ELEMENT_KEY</a></b>
+								</div>
+								<div class="description">The property key used in the wire protocol to indicate that a JSON object
+contains the ID of a WebElement.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class webdriver.WebElement.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#clear">clear</a></b>()
+								</div>
+								<div class="description">Schedules a command to clear the {@code value} of this element.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#click">click</a></b>()
+								</div>
+								<div class="description">Schedules a command to click on this element.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">webdriver.WebElement.<b><a href="../symbols/webdriver.WebElement.html#.equals">equals</a></b>(a, b)
+								</div>
+								<div class="description">Compares to WebElements for equality.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#findElement">findElement</a></b>(locator, var_args)
+								</div>
+								<div class="description">Schedule a command to find a descendant of this element.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#findElements">findElements</a></b>(locator, var_args)
+								</div>
+								<div class="description">Schedules a command to find all of the descendants of this element that match
+the given search criteria.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#getAttribute">getAttribute</a></b>(attributeName)
+								</div>
+								<div class="description">Schedules a command to query for the value of the given attribute of the
+element.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#getCssValue">getCssValue</a></b>(cssStyleProperty)
+								</div>
+								<div class="description">Schedules a command to query for the computed style of the element
+represented by this instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#getDriver">getDriver</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#getInnerHtml">getInnerHtml</a></b>()
+								</div>
+								<div class="description">Schedules a command to retrieve the inner HTML of this element.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#getLocation">getLocation</a></b>()
+								</div>
+								<div class="description">Schedules a command to compute the location of this element in page space.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#getOuterHtml">getOuterHtml</a></b>()
+								</div>
+								<div class="description">Schedules a command to retrieve the outer HTML of this element.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#getSize">getSize</a></b>()
+								</div>
+								<div class="description">Schedules a command to compute the size of this element's bounding box, in
+pixels.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#getTagName">getTagName</a></b>()
+								</div>
+								<div class="description">Schedules a command to query for the tag/node name of this element.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#getText">getText</a></b>()
+								</div>
+								<div class="description">Get the visible (i.e.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#isDisplayed">isDisplayed</a></b>()
+								</div>
+								<div class="description">Schedules a command to test whether this element is currently displayed.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#isElementPresent">isElementPresent</a></b>(locator, var_args)
+								</div>
+								<div class="description">Schedules a command to test if there is at least one descendant of this
+element that matches the given search criteria.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#isEnabled">isEnabled</a></b>()
+								</div>
+								<div class="description">Schedules a command to query whether the DOM element represented by this
+instance is enabled, as dicted by the {@code disabled} attribute.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#isSelected">isSelected</a></b>()
+								</div>
+								<div class="description">Schedules a command to query whether this element is selected.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#sendKeys">sendKeys</a></b>(var_args)
+								</div>
+								<div class="description">Schedules a command to type a sequence on the DOM element represented by this
+instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#submit">submit</a></b>()
+								</div>
+								<div class="description">Schedules a command to submit the form containing this element (or this
+element if it is a FORM element).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebElement.html#toWireValue">toWireValue</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>webdriver.WebElement</b>(driver, id)
+				</div>
+				
+				<div class="description">
+					Represents a DOM element. WebElements can be found by searching from the
+document root using a {@code webdriver.WebDriver} instance, or by searching
+under another {@code webdriver.WebElement}:
+<pre><code>
+  driver.get('http://www.google.com');
+  var searchForm = driver.findElement(By.tagName('form'));
+  var searchBox = searchForm.findElement(By.name('q'));
+  searchBox.sendKeys('webdriver');
+</code></pre>
+
+The WebElement is implemented as a promise for compatibility with the promise
+API. It will always resolve itself when its internal state has been fully
+resolved and commands may be issued against the element. This can be used to
+catch errors when an element cannot be located on the page:
+<pre><code>
+  driver.findElement(By.id('not-there')).then(function(element) {
+    alert('Found an element that was not expected to be there!');
+  }, function(error) {
+    alert('The element was not found, as expected');
+  });
+</code></pre>
+					
+				</div>
+				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{!<a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a>}</span>  <b>driver</b>
+								
+							</dt>
+								<dd>The parent WebDriver instance for this
+    element.</dd>
+						
+							<dt>
+								<span class="light fixedFont">{!(string|<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>)}</span>  <b>id</b>
+								
+							</dt>
+								<dd>Either the opaque ID for the
+    underlying DOM element assigned by the server, or a promise that will
+    resolve to that ID or another WebElement.</dd>
+						
+						</dl>
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name=".ELEMENT_KEY"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">webdriver.WebElement.</span><b>ELEMENT_KEY</b>
+					
+					</div>
+					<div class="description">
+						The property key used in the wire protocol to indicate that a JSON object
+contains the ID of a WebElement.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="clear"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>clear</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to clear the {@code value} of this element. This command
+has no effect if the underlying DOM element is neither a text INPUT element
+nor a TEXTAREA element.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when
+    the element has been cleared.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="click"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>click</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to click on this element.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when
+    the click command has completed.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".equals"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<span class="light">webdriver.WebElement.</span><b>equals</b>(a, b)
+					
+					</div>
+					<div class="description">
+						Compares to WebElements for equality.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!<a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a>}</span> <b>a</b>
+									
+								</dt>
+								<dd>A WebElement.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{!<a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a>}</span> <b>b</b>
+									
+								</dt>
+								<dd>A WebElement.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved to
+    whether the two WebElements are equal.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="findElement"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a>}</span>
+					<b>findElement</b>(locator, var_args)
+					
+					</div>
+					<div class="description">
+						Schedule a command to find a descendant of this element. If the element
+cannot be found, a {@code bot.ErrorCode.NO_SUCH_ELEMENT} result will
+be returned by the driver. Unlike other commands, this error cannot be
+suppressed. In other words, scheduling a command to find an element doubles
+as an assert that the element is present on the page. To test whether an
+element is present on the page, use {@code #isElementPresent} instead.
+<p/>
+The search criteria for find an element may either be a
+{@code webdriver.Locator} object, or a simple JSON object whose sole key
+is one of the accepted locator strategies, as defined by
+{@code webdriver.Locator.Strategy}. For example, the following two
+statements are equivalent:
+<code><pre>
+var e1 = element.findElement(By.id('foo'));
+var e2 = element.findElement({id:'foo'});
+</pre></code>
+<p/>
+Note that JS locator searches cannot be restricted to a subtree. All such
+searches are delegated to this instance's parent WebDriver.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/webdriver.Locator.html">webdriver.Locator</a>|Object.<string>}</span> <b>locator</b>
+									
+								</dt>
+								<dd>The locator
+    strategy to use when searching for the element.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{...}</span> <b>var_args</b>
+									
+								</dt>
+								<dd>Arguments to pass to {@code WebDriver#executeScript} if
+    using a JavaScript locator.  Otherwise ignored.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a>}</span> A WebElement that can be used to issue
+    commands against the located element. If the element is not found, the
+    element will be invalidated and all scheduled commands aborted.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="findElements"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>findElements</b>(locator, var_args)
+					
+					</div>
+					<div class="description">
+						Schedules a command to find all of the descendants of this element that match
+the given search criteria.
+<p/>
+Note that JS locator searches cannot be restricted to a subtree. All such
+searches are delegated to this instance's parent WebDriver.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/webdriver.Locator.html">webdriver.Locator</a>|Object.<string>}</span> <b>locator</b>
+									
+								</dt>
+								<dd>The locator
+    strategy to use when searching for the elements.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{...}</span> <b>var_args</b>
+									
+								</dt>
+								<dd>Arguments to pass to {@code WebDriver#executeScript} if
+    using a JavaScript locator.  Otherwise ignored.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with an
+    array of located <a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a>s.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getAttribute"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getAttribute</b>(attributeName)
+					
+					</div>
+					<div class="description">
+						Schedules a command to query for the value of the given attribute of the
+element. Will return the current value, even if it has been modified after
+the page has been loaded. More exactly, this method will return the value of
+the given attribute, unless that attribute is not present, in which case the
+value of the property with the same name is returned. If neither value is
+set, null is returned (for example, the "value" property of a textarea
+element). The "style" attribute is converted as best can be to a
+text representation with a trailing semi-colon. The following are deemed to
+be "boolean" attributes and will return either "true" or null:
+
+<p>async, autofocus, autoplay, checked, compact, complete, controls, declare,
+defaultchecked, defaultselected, defer, disabled, draggable, ended,
+formnovalidate, hidden, indeterminate, iscontenteditable, ismap, itemscope,
+loop, multiple, muted, nohref, noresize, noshade, novalidate, nowrap, open,
+paused, pubdate, readonly, required, reversed, scoped, seamless, seeking,
+selected, spellcheck, truespeed, willvalidate
+
+<p>Finally, the following commonly mis-capitalized attribute/property names
+are evaluated as expected:
+<ul>
+  <li>"class"
+  <li>"readonly"
+</ul>
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>attributeName</b>
+									
+								</dt>
+								<dd>The name of the attribute to query.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    attribute's value. The returned value will always be either a string or
+    null.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getCssValue"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getCssValue</b>(cssStyleProperty)
+					
+					</div>
+					<div class="description">
+						Schedules a command to query for the computed style of the element
+represented by this instance. If the element inherits the named style from
+its parent, the parent will be queried for its value.  Where possible, color
+values will be converted to their hex representation (e.g. #00ff00 instead of
+rgb(0, 255, 0)).
+<p/>
+<em>Warning:</em> the value returned will be as the browser interprets it, so
+it may be tricky to form a proper assertion.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>cssStyleProperty</b>
+									
+								</dt>
+								<dd>The name of the CSS style property to look
+    up.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    requested CSS value.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getDriver"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a>}</span>
+					<b>getDriver</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a>}</span> The parent driver for this instance.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getInnerHtml"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getInnerHtml</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to retrieve the inner HTML of this element.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    element's inner HTML.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getLocation"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getLocation</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to compute the location of this element in page space.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved to the
+    element's location as a {@code {x:number, y:number}} object.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getOuterHtml"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getOuterHtml</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to retrieve the outer HTML of this element.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with
+    the element's outer HTML.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getSize"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getSize</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to compute the size of this element's bounding box, in
+pixels.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    element's size as a {@code {width:number, height:number}} object.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getTagName"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getTagName</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to query for the tag/node name of this element.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    element's tag name.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getText"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getText</b>()
+					
+					</div>
+					<div class="description">
+						Get the visible (i.e. not hidden by CSS) innerText of this element, including
+sub-elements, without any leading or trailing whitespace.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    element's visible text.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="isDisplayed"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>isDisplayed</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to test whether this element is currently displayed.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with
+    whether this element is currently visible on the page.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="isElementPresent"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>isElementPresent</b>(locator, var_args)
+					
+					</div>
+					<div class="description">
+						Schedules a command to test if there is at least one descendant of this
+element that matches the given search criteria.
+
+<p>Note that JS locator searches cannot be restricted to a subtree of the
+DOM. All such searches are delegated to this instance's parent WebDriver.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/webdriver.Locator.html">webdriver.Locator</a>|Object.<string>}</span> <b>locator</b>
+									
+								</dt>
+								<dd>The locator
+    strategy to use when searching for the element.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{...}</span> <b>var_args</b>
+									
+								</dt>
+								<dd>Arguments to pass to {@code WebDriver#executeScript} if
+    using a JavaScript locator.  Otherwise ignored.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with
+    whether an element could be located on the page.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="isEnabled"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>isEnabled</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to query whether the DOM element represented by this
+instance is enabled, as dicted by the {@code disabled} attribute.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with
+    whether this element is currently enabled.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="isSelected"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>isSelected</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to query whether this element is selected.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with
+    whether this element is currently selected.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="sendKeys"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>sendKeys</b>(var_args)
+					
+					</div>
+					<div class="description">
+						Schedules a command to type a sequence on the DOM element represented by this
+instance.
+<p/>
+Modifier keys (SHIFT, CONTROL, ALT, META) are stateful; once a modifier is
+processed in the keysequence, that key state is toggled until one of the
+following occurs:
+<ul>
+<li>The modifier key is encountered again in the sequence. At this point the
+state of the key is toggled (along with the appropriate keyup/down events).
+</li>
+<li>The {@code webdriver.Key.NULL} key is encountered in the sequence. When
+this key is encountered, all modifier keys current in the down state are
+released (with accompanying keyup events). The NULL key can be used to
+simulate common keyboard shortcuts:
+<code><pre>
+    element.sendKeys("text was",
+                     webdriver.Key.CONTROL, "a", webdriver.Key.NULL,
+                     "now text is");
+    // Alternatively:
+    element.sendKeys("text was",
+                     webdriver.Key.chord(webdriver.Key.CONTROL, "a"),
+                     "now text is");
+</pre></code></li>
+<li>The end of the keysequence is encountered. When there are no more keys
+to type, all depressed modifier keys are released (with accompanying keyup
+events).
+</li>
+</ul>
+<strong>Note:</strong> On browsers where native keyboard events are not yet
+supported (e.g. Firefox on OS X), key events will be synthesized. Special
+punctionation keys will be synthesized according to a standard QWERTY en-us
+keyboard layout.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{...string}</span> <b>var_args</b>
+									
+								</dt>
+								<dd>The sequence of keys to
+    type. All arguments will be joined into a single sequence (var_args is
+    permitted for convenience).</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when all
+    keys have been typed.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="submit"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>submit</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to submit the form containing this element (or this
+element if it is a FORM element). This command is a no-op if the element is
+not contained in a form.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when
+    the form has been submitted.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="toWireValue"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>toWireValue</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that resolves to this
+    element's JSON representation as defined by the WebDriver wire protocol.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd>http://code.google.com/p/selenium/wiki/JsonWireProtocol</dd>
+							
+							</dl>
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Jan 25 2014 14:08:12 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

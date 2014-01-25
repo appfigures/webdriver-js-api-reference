@@ -1,0 +1,651 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - webdriver.WebDriver.TargetLocator</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/bot.Error.html">bot.Error</a></li>
+	
+	<li><a href="../symbols/Build.html">Build</a></li>
+	
+	<li><a href="../symbols/goog.inherits-tempCtor.html">goog.inherits-tempCtor</a></li>
+	
+	<li><a href="../symbols/Server.html">Server</a></li>
+	
+	<li><a href="../symbols/TestEnvironment.html">TestEnvironment</a></li>
+	
+	<li><a href="../symbols/webdriver.AbstractBuilder.html">webdriver.AbstractBuilder</a></li>
+	
+	<li><a href="../symbols/webdriver.ActionSequence.html">webdriver.ActionSequence</a></li>
+	
+	<li><a href="../symbols/webdriver.Alert.html">webdriver.Alert</a></li>
+	
+	<li><a href="../symbols/webdriver.Builder.html">webdriver.Builder</a></li>
+	
+	<li><a href="../symbols/webdriver.Capabilities.html">webdriver.Capabilities</a></li>
+	
+	<li><a href="../symbols/webdriver.Command.html">webdriver.Command</a></li>
+	
+	<li><a href="../symbols/webdriver.EventEmitter.html">webdriver.EventEmitter</a></li>
+	
+	<li><a href="../symbols/webdriver.FirefoxDomExecutor.html">webdriver.FirefoxDomExecutor</a></li>
+	
+	<li><a href="../symbols/webdriver.Locator.html">webdriver.Locator</a></li>
+	
+	<li><a href="../symbols/webdriver.logging.Entry.html">webdriver.logging.Entry</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.Deferred.html">webdriver.promise.Deferred</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a></li>
+	
+	<li><a href="../symbols/webdriver.Session.html">webdriver.Session</a></li>
+	
+	<li><a href="../symbols/webdriver.stacktrace.Frame.html">webdriver.stacktrace.Frame</a></li>
+	
+	<li><a href="../symbols/webdriver.stacktrace.Snapshot.html">webdriver.stacktrace.Snapshot</a></li>
+	
+	<li><a href="../symbols/webdriver.UnhandledAlertError.html">webdriver.UnhandledAlertError</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Logs.html">webdriver.WebDriver.Logs</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Navigation.html">webdriver.WebDriver.Navigation</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Options.html">webdriver.WebDriver.Options</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.TargetLocator.html">webdriver.WebDriver.TargetLocator</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Timeouts.html">webdriver.WebDriver.Timeouts</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Window.html">webdriver.WebDriver.Window</a></li>
+	
+	<li><a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class webdriver.WebDriver.TargetLocator
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				
+			
+				
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/_selenium-webdriver_lib_webdriver_webdriver.js.html">webdriver.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class webdriver.WebDriver.TargetLocator.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/webdriver.WebDriver.TargetLocator.html#constructor">webdriver.WebDriver.TargetLocator</a></b>(driver)
+							</div>
+							<div class="description">An interface for changing the focus of the driver to another frame or window.</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class webdriver.WebDriver.TargetLocator.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.TargetLocator.html#activeElement">activeElement</a></b>()
+								</div>
+								<div class="description">Schedules a command retrieve the {@code document.activeElement} element on
+the current document, or {@code document.body} if activeElement is not
+available.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.TargetLocator.html#alert">alert</a></b>()
+								</div>
+								<div class="description">Schedules a command to change focus to the active alert dialog.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.TargetLocator.html#defaultContent">defaultContent</a></b>()
+								</div>
+								<div class="description">Schedules a command to switch focus of all future commands to the first frame
+on the page.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.TargetLocator.html#frame">frame</a></b>(nameOrIndex)
+								</div>
+								<div class="description">Schedules a command to switch the focus of all future commands to another
+frame on the page.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.TargetLocator.html#window">window</a></b>(nameOrHandle)
+								</div>
+								<div class="description">Schedules a command to switch the focus of all future commands to another
+window.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>webdriver.WebDriver.TargetLocator</b>(driver)
+				</div>
+				
+				<div class="description">
+					An interface for changing the focus of the driver to another frame or window.
+					
+				</div>
+				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{!<a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a>}</span>  <b>driver</b>
+								
+							</dt>
+								<dd>The parent driver.</dd>
+						
+						</dl>
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="activeElement"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a>}</span>
+					<b>activeElement</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command retrieve the {@code document.activeElement} element on
+the current document, or {@code document.body} if activeElement is not
+available.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a>}</span> The active element.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="alert"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.Alert.html">webdriver.Alert</a>}</span>
+					<b>alert</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to change focus to the active alert dialog. This command
+will return a bot.ErrorCode.NO_MODAL_DIALOG_OPEN error if a modal
+dialog is not currently open.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.Alert.html">webdriver.Alert</a>}</span> The open alert.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="defaultContent"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>defaultContent</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to switch focus of all future commands to the first frame
+on the page.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when the
+    driver has changed focus to the default content.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="frame"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>frame</b>(nameOrIndex)
+					
+					</div>
+					<div class="description">
+						Schedules a command to switch the focus of all future commands to another
+frame on the page.
+<p/>
+If the frame is specified by a number, the command will switch to the frame
+by its (zero-based) index into the {@code window.frames} collection.
+<p/>
+If the frame is specified by a string, the command will select the frame by
+its name or ID. To select sub-frames, simply separate the frame names/IDs by
+dots. As an example, "main.child" will select the frame with the name "main"
+and then its child "child".
+<p/>
+If the specified frame can not be found, the deferred result will errback
+with a {@code bot.ErrorCode.NO_SUCH_FRAME} error.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string|number}</span> <b>nameOrIndex</b>
+									
+								</dt>
+								<dd>The frame locator.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when the
+    driver has changed focus to the specified frame.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="window"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>window</b>(nameOrHandle)
+					
+					</div>
+					<div class="description">
+						Schedules a command to switch the focus of all future commands to another
+window. Windows may be specified by their {@code window.name} attribute or
+by its handle (as returned by {@code webdriver.WebDriver#getWindowHandles}).
+<p/>
+If the specificed window can not be found, the deferred result will errback
+with a {@code bot.ErrorCode.NO_SUCH_WINDOW} error.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>nameOrHandle</b>
+									
+								</dt>
+								<dd>The name or window handle of the window to
+    switch focus to.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when the
+    driver has changed focus to the specified window.</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Jan 25 2014 14:08:12 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

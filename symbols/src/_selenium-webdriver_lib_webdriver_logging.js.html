@@ -1,0 +1,166 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">// Copyright 2013 Selenium comitters</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="COMM">// Copyright 2013 Software Freedom Conservancy</span><span class="WHIT">
+<span class='line'>  3</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="COMM">// Licensed under the Apache License, Version 2.0 (the "License");</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="COMM">// you may not use this file except in compliance with the License.</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="COMM">// You may obtain a copy of the License at</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="COMM">//      http://www.apache.org/licenses/LICENSE-2.0</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="COMM">// Unless required by applicable law or agreed to in writing, software</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="COMM">// distributed under the License is distributed on an "AS IS" BASIS,</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="COMM">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="COMM">// See the License for the specific language governing permissions and</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="COMM">// limitations under the License.</span><span class="WHIT">
+<span class='line'> 15</span> 
+<span class='line'> 16</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'webdriver.logging'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 17</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'webdriver.logging.Preferences'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 18</span> 
+<span class='line'> 19</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'goog.object'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> 
+<span class='line'> 21</span> 
+<span class='line'> 22</span> </span><span class="COMM">/**
+<span class='line'> 23</span>  * Log level names from WebDriver's JSON wire protocol.
+<span class='line'> 24</span>  * @enum {string}
+<span class='line'> 25</span>  */</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="NAME">webdriver.logging.LevelName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">  </span><span class="NAME">ALL</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'ALL'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="WHIT">  </span><span class="NAME">DEBUG</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'DEBUG'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">  </span><span class="NAME">INFO</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'INFO'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">  </span><span class="NAME">WARNING</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'WARNING'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">  </span><span class="NAME">SEVERE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'SEVERE'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">  </span><span class="NAME">OFF</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'OFF'</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 34</span> 
+<span class='line'> 35</span> 
+<span class='line'> 36</span> </span><span class="COMM">/**
+<span class='line'> 37</span>  * Logging levels.
+<span class='line'> 38</span>  * @enum {{value: number, name: webdriver.logging.LevelName}}
+<span class='line'> 39</span>  */</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="NAME">webdriver.logging.Level</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="WHIT">  </span><span class="NAME">ALL</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Number.MIN_VALUE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.LevelName.ALL</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">  </span><span class="NAME">DEBUG</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">700</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.LevelName.DEBUG</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="WHIT">  </span><span class="NAME">INFO</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">800</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.LevelName.INFO</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">  </span><span class="NAME">WARNING</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">900</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.LevelName.WARNING</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">  </span><span class="NAME">SEVERE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">1000</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.LevelName.SEVERE</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">  </span><span class="NAME">OFF</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Number.MAX_VALUE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.LevelName.OFF</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 48</span> 
+<span class='line'> 49</span> 
+<span class='line'> 50</span> </span><span class="COMM">/**
+<span class='line'> 51</span>  * Converts a level name or value to a {@link webdriver.logging.Level} value.
+<span class='line'> 52</span>  * If the name/value is not recognized, {@link webdriver.logging.Level.ALL}
+<span class='line'> 53</span>  * will be returned.
+<span class='line'> 54</span>  * @param {(number|string)} nameOrValue The log level name, or value, to
+<span class='line'> 55</span>  *     convert .
+<span class='line'> 56</span>  * @return {!webdriver.logging.Level} The converted level.
+<span class='line'> 57</span>  */</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="NAME">webdriver.logging.getLevel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">nameOrValue</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">predicate</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.isString</span><span class="PUNC">(</span><span class="NAME">nameOrValue</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">      </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">val.name</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">nameOrValue</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">      </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">val.value</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">nameOrValue</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 62</span> 
+<span class='line'> 63</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">goog.object.findValue</span><span class="PUNC">(</span><span class="NAME">webdriver.logging.Level</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">predicate</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">      </span><span class="NAME">webdriver.logging.Level.ALL</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> 
+<span class='line'> 67</span> 
+<span class='line'> 68</span> </span><span class="COMM">/**
+<span class='line'> 69</span>  * Common log types.
+<span class='line'> 70</span>  * @enum {string}
+<span class='line'> 71</span>  */</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="NAME">webdriver.logging.Type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">  </span><span class="COMM">/** Logs originating from the browser. */</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">  </span><span class="NAME">BROWSER</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'browser'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">  </span><span class="COMM">/** Logs from a WebDriver client. */</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">  </span><span class="NAME">CLIENT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'client'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">  </span><span class="COMM">/** Logs from a WebDriver implementation. */</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">  </span><span class="NAME">DRIVER</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'driver'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">  </span><span class="COMM">/** Logs related to performance. */</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">  </span><span class="NAME">PERFORMANCE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'performance'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">  </span><span class="COMM">/** Logs from the remote server. */</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">  </span><span class="NAME">SERVER</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'server'</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> 
+<span class='line'> 85</span> 
+<span class='line'> 86</span> </span><span class="COMM">/**
+<span class='line'> 87</span>  * A hash describing log preferences.
+<span class='line'> 88</span>  * @typedef {Object.&lt;webdriver.logging.Type, webdriver.logging.LevelName>}
+<span class='line'> 89</span>  */</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="NAME">webdriver.logging.Preferences</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 91</span> 
+<span class='line'> 92</span> 
+<span class='line'> 93</span> </span><span class="COMM">/**
+<span class='line'> 94</span>  * A single log entry.
+<span class='line'> 95</span>  * @param {(!webdriver.logging.Level|string)} level The entry level.
+<span class='line'> 96</span>  * @param {string} message The log message.
+<span class='line'> 97</span>  * @param {number=} opt_timestamp The time this entry was generated, in
+<span class='line'> 98</span>  *     milliseconds since 0:00:00, January 1, 1970 UTC. If omitted, the
+<span class='line'> 99</span>  *     current time will be used.
+<span class='line'>100</span>  * @param {string=} opt_type The log type, if known.
+<span class='line'>101</span>  * @constructor
+<span class='line'>102</span>  */</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="NAME">webdriver.logging.Entry</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">level</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_timestamp</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>104</span> 
+<span class='line'>105</span> </span><span class="WHIT">  </span><span class="COMM">/** @type {!webdriver.logging.Level} */</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">  </span><span class="NAME">this.level</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">      </span><span class="NAME">goog.isString</span><span class="PUNC">(</span><span class="NAME">level</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.getLevel</span><span class="PUNC">(</span><span class="NAME">level</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">level</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>108</span> 
+<span class='line'>109</span> </span><span class="WHIT">  </span><span class="COMM">/** @type {string} */</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">  </span><span class="NAME">this.message</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>111</span> 
+<span class='line'>112</span> </span><span class="WHIT">  </span><span class="COMM">/** @type {number} */</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">  </span><span class="NAME">this.timestamp</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.isNumber</span><span class="PUNC">(</span><span class="NAME">opt_timestamp</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">opt_timestamp</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">goog.now</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>114</span> 
+<span class='line'>115</span> </span><span class="WHIT">  </span><span class="COMM">/** @type {string} */</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">  </span><span class="NAME">this.type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">opt_type</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>118</span> 
+<span class='line'>119</span> 
+<span class='line'>120</span> </span><span class="COMM">/**
+<span class='line'>121</span>  * @return {{level: string, message: string, timestamp: number,
+<span class='line'>122</span>  *           type: string}} The JSON representation of this entry.
+<span class='line'>123</span>  */</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="NAME">webdriver.logging.Entry.prototype.toJSON</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">    </span><span class="STRN">'level'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.level.name</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">    </span><span class="STRN">'message'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.message</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">    </span><span class="STRN">'timestamp'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.timestamp</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">    </span><span class="STRN">'type'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.type</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>131</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>132</span> 
+<span class='line'>133</span> 
+<span class='line'>134</span> </span><span class="COMM">/**
+<span class='line'>135</span>  * Converts a {@link goog.debug.LogRecord} into a
+<span class='line'>136</span>  * {@link webdriver.logging.Entry}.
+<span class='line'>137</span>  * @param {!goog.debug.LogRecord} logRecord The record to convert.
+<span class='line'>138</span>  * @param {string=} opt_type The log type.
+<span class='line'>139</span>  * @return {!webdriver.logging.Entry} The converted entry.
+<span class='line'>140</span>  */</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="NAME">webdriver.logging.Entry.fromClosureLogRecord</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">logRecord</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt_type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>142</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">closureLevel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">logRecord.getLevel</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>143</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">level</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.Level.SEVERE</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>144</span> 
+<span class='line'>145</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">closureLevel.value</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.Level.DEBUG.value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">    </span><span class="NAME">level</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.Level.DEBUG</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">closureLevel.value</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.Level.INFO.value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">    </span><span class="NAME">level</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.Level.INFO</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">closureLevel.value</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.Level.WARNING.value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">    </span><span class="NAME">level</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.Level.WARNING</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>152</span> 
+<span class='line'>153</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.logging.Entry</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">      </span><span class="NAME">level</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>155</span> </span><span class="WHIT">      </span><span class="STRN">'['</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">logRecord.getLoggerName</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'] '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">logRecord.getMessage</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">      </span><span class="NAME">logRecord.getMillis</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>157</span> </span><span class="WHIT">      </span><span class="NAME">opt_type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>159</span> </span></pre></body></html>

@@ -1,0 +1,652 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">// Copyright 2009 The Closure Library Authors. All Rights Reserved.</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="COMM">// Copyright 2012 Selenium comitters</span><span class="WHIT">
+<span class='line'>  3</span> </span><span class="COMM">// Copyright 2012 Software Freedom Conservancy</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="COMM">// Licensed under the Apache License, Version 2.0 (the "License");</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="COMM">// you may not use this file except in compliance with the License.</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="COMM">// You may obtain a copy of the License at</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="COMM">//      http://www.apache.org/licenses/LICENSE-2.0</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="COMM">// Unless required by applicable law or agreed to in writing, software</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="COMM">// distributed under the License is distributed on an "AS-IS" BASIS,</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="COMM">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="COMM">// See the License for the specific language governing permissions and</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="COMM">// limitations under the License.</span><span class="WHIT">
+<span class='line'> 16</span> 
+<span class='line'> 17</span> </span><span class="COMM">/**
+<span class='line'> 18</span>  * @fileoverview Tools for parsing and pretty printing error stack traces. This
+<span class='line'> 19</span>  * file is based on goog.testing.stacktrace.
+<span class='line'> 20</span>  */</span><span class="WHIT">
+<span class='line'> 21</span> 
+<span class='line'> 22</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'webdriver.stacktrace'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'webdriver.stacktrace.Snapshot'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 24</span> 
+<span class='line'> 25</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'goog.array'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'goog.string'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'goog.userAgent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 28</span> 
+<span class='line'> 29</span> 
+<span class='line'> 30</span> 
+<span class='line'> 31</span> </span><span class="COMM">/**
+<span class='line'> 32</span>  * Stores a snapshot of the stack trace at the time this instance was created.
+<span class='line'> 33</span>  * The stack trace will always be adjusted to exclude this function call.
+<span class='line'> 34</span>  * @param {number=} opt_slice The number of frames to remove from the top of
+<span class='line'> 35</span>  *     the generated stack trace.
+<span class='line'> 36</span>  * @constructor
+<span class='line'> 37</span>  */</span><span class="WHIT">
+<span class='line'> 38</span> </span><span class="NAME">webdriver.stacktrace.Snapshot</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">opt_slice</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 39</span> 
+<span class='line'> 40</span> </span><span class="WHIT">  </span><span class="COMM">/** @private {number} */</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="WHIT">  </span><span class="NAME">this.slice_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">opt_slice</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 42</span> 
+<span class='line'> 43</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">error</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">webdriver.stacktrace.CAN_CAPTURE_STACK_TRACE_</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">    </span><span class="NAME">error</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">    </span><span class="NAME">Error.captureStackTrace</span><span class="PUNC">(</span><span class="NAME">error</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.Snapshot</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="WHIT">    </span><span class="COMM">// Remove 1 extra frame for the call to this constructor.</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">    </span><span class="NAME">this.slice_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">    </span><span class="COMM">// IE will only create a stack trace when the Error is thrown.</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">    </span><span class="COMM">// We use null.x() to throw an exception instead of throw this.error_</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">    </span><span class="COMM">// because the closure compiler may optimize throws to a function call</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">    </span><span class="COMM">// in an attempt to minimize the binary size which in turn has the side</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">    </span><span class="COMM">// effect of adding an unwanted stack frame.</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">    </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">      </span><span class="NAME">null.x</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">      </span><span class="NAME">error</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">e</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 61</span> 
+<span class='line'> 62</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'> 63</span>    * The error's stacktrace.  This must be accessed immediately to ensure Opera
+<span class='line'> 64</span>    * computes the context correctly.
+<span class='line'> 65</span>    * @private {string}
+<span class='line'> 66</span>    */</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">  </span><span class="NAME">this.stack_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.getStack_</span><span class="PUNC">(</span><span class="NAME">error</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> 
+<span class='line'> 70</span> 
+<span class='line'> 71</span> </span><span class="COMM">/**
+<span class='line'> 72</span>  * Whether the current environment supports the Error.captureStackTrace
+<span class='line'> 73</span>  * function (as of 10/17/2012, only V8).
+<span class='line'> 74</span>  * @private {boolean}
+<span class='line'> 75</span>  * @const
+<span class='line'> 76</span>  */</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="NAME">webdriver.stacktrace.CAN_CAPTURE_STACK_TRACE_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">    </span><span class="NAME">goog.isFunction</span><span class="PUNC">(</span><span class="NAME">Error.captureStackTrace</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> 
+<span class='line'> 80</span> 
+<span class='line'> 81</span> </span><span class="COMM">/**
+<span class='line'> 82</span>  * Whether the current browser supports stack traces.
+<span class='line'> 83</span>  *
+<span class='line'> 84</span>  * @type {boolean}
+<span class='line'> 85</span>  * @const
+<span class='line'> 86</span>  */</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="NAME">webdriver.stacktrace.BROWSER_SUPPORTED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.CAN_CAPTURE_STACK_TRACE_</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">      </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">        </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="NAME">e.stack</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 95</span> 
+<span class='line'> 96</span> 
+<span class='line'> 97</span> </span><span class="COMM">/**
+<span class='line'> 98</span>  * The parsed stack trace. This list is lazily generated the first time it is
+<span class='line'> 99</span>  * accessed.
+<span class='line'>100</span>  * @private {Array.&lt;!webdriver.stacktrace.Frame>}
+<span class='line'>101</span>  */</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="NAME">webdriver.stacktrace.Snapshot.prototype.parsedStack_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>103</span> 
+<span class='line'>104</span> 
+<span class='line'>105</span> </span><span class="COMM">/**
+<span class='line'>106</span>  * @return {!Array.&lt;!webdriver.stacktrace.Frame>} The parsed stack trace.
+<span class='line'>107</span>  */</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="NAME">webdriver.stacktrace.Snapshot.prototype.getStacktrace</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">goog.isNull</span><span class="PUNC">(</span><span class="NAME">this.parsedStack_</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">    </span><span class="NAME">this.parsedStack_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.parse_</span><span class="PUNC">(</span><span class="NAME">this.stack_</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>111</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.slice_</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="WHIT">      </span><span class="NAME">this.parsedStack_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.array.slice</span><span class="PUNC">(</span><span class="NAME">this.parsedStack_</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.slice_</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">    </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">this.slice_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">    </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">this.stack_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.parsedStack_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>119</span> 
+<span class='line'>120</span> 
+<span class='line'>121</span> 
+<span class='line'>122</span> </span><span class="COMM">/**
+<span class='line'>123</span>  * Class representing one stack frame.
+<span class='line'>124</span>  * @param {(string|undefined)} context Context object, empty in case of global
+<span class='line'>125</span>  *     functions or if the browser doesn't provide this information.
+<span class='line'>126</span>  * @param {(string|undefined)} name Function name, empty in case of anonymous
+<span class='line'>127</span>  *     functions.
+<span class='line'>128</span>  * @param {(string|undefined)} alias Alias of the function if available. For
+<span class='line'>129</span>  *     example the function name will be 'c' and the alias will be 'b' if the
+<span class='line'>130</span>  *     function is defined as &lt;code>a.b = function c() {};&lt;/code>.
+<span class='line'>131</span>  * @param {(string|undefined)} path File path or URL including line number and
+<span class='line'>132</span>  *     optionally column number separated by colons.
+<span class='line'>133</span>  * @constructor
+<span class='line'>134</span>  */</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="NAME">webdriver.stacktrace.Frame</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">context</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">alias</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">path</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>136</span> 
+<span class='line'>137</span> </span><span class="WHIT">  </span><span class="COMM">/** @private {string} */</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">  </span><span class="NAME">this.context_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>139</span> 
+<span class='line'>140</span> </span><span class="WHIT">  </span><span class="COMM">/** @private {string} */</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">  </span><span class="NAME">this.name_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>142</span> 
+<span class='line'>143</span> </span><span class="WHIT">  </span><span class="COMM">/** @private {string} */</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="WHIT">  </span><span class="NAME">this.alias_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">alias</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>145</span> 
+<span class='line'>146</span> </span><span class="WHIT">  </span><span class="COMM">/** @private {string} */</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">  </span><span class="NAME">this.path_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">path</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>148</span> 
+<span class='line'>149</span> </span><span class="WHIT">  </span><span class="COMM">/** @private {string} */</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">  </span><span class="NAME">this.url_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.path_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>151</span> 
+<span class='line'>152</span> </span><span class="WHIT">  </span><span class="COMM">/** @private {number} */</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">  </span><span class="NAME">this.line_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>154</span> 
+<span class='line'>155</span> </span><span class="WHIT">  </span><span class="COMM">/** @private {number} */</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">  </span><span class="NAME">this.column_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>157</span> 
+<span class='line'>158</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">path</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">match</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="REGX">/:(\d+)(?::(\d+))?$/</span><span class="PUNC">.</span><span class="NAME">exec</span><span class="PUNC">(</span><span class="NAME">path</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">match</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>161</span> </span><span class="WHIT">      </span><span class="NAME">this.line_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">match</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>162</span> </span><span class="WHIT">      </span><span class="NAME">this.column</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">match</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>163</span> </span><span class="WHIT">      </span><span class="NAME">this.url_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">path.substr</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">match.index</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>164</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>165</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>166</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>167</span> 
+<span class='line'>168</span> 
+<span class='line'>169</span> </span><span class="COMM">/**
+<span class='line'>170</span>  * Constant for an anonymous frame.
+<span class='line'>171</span>  * @private {!webdriver.stacktrace.Frame}
+<span class='line'>172</span>  * @const
+<span class='line'>173</span>  */</span><span class="WHIT">
+<span class='line'>174</span> </span><span class="NAME">webdriver.stacktrace.ANONYMOUS_FRAME_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>175</span> </span><span class="WHIT">    </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.Frame</span><span class="PUNC">(</span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>176</span> 
+<span class='line'>177</span> 
+<span class='line'>178</span> </span><span class="COMM">/**
+<span class='line'>179</span>  * @return {string} The function name or empty string if the function is
+<span class='line'>180</span>  *     anonymous and the object field which it's assigned to is unknown.
+<span class='line'>181</span>  */</span><span class="WHIT">
+<span class='line'>182</span> </span><span class="NAME">webdriver.stacktrace.Frame.prototype.getName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>183</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.name_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>185</span> 
+<span class='line'>186</span> 
+<span class='line'>187</span> </span><span class="COMM">/**
+<span class='line'>188</span>  * @return {string} The url or empty string if it is unknown.
+<span class='line'>189</span>  */</span><span class="WHIT">
+<span class='line'>190</span> </span><span class="NAME">webdriver.stacktrace.Frame.prototype.getUrl</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>191</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.url_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>192</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>193</span> 
+<span class='line'>194</span> 
+<span class='line'>195</span> </span><span class="COMM">/**
+<span class='line'>196</span>  * @return {number} The line number if known or -1 if it is unknown.
+<span class='line'>197</span>  */</span><span class="WHIT">
+<span class='line'>198</span> </span><span class="NAME">webdriver.stacktrace.Frame.prototype.getLine</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>199</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.line_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>200</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>201</span> 
+<span class='line'>202</span> 
+<span class='line'>203</span> </span><span class="COMM">/**
+<span class='line'>204</span>  * @return {number} The column number if known and -1 if it is unknown.
+<span class='line'>205</span>  */</span><span class="WHIT">
+<span class='line'>206</span> </span><span class="NAME">webdriver.stacktrace.Frame.prototype.getColumn</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>207</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.column_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>208</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>209</span> 
+<span class='line'>210</span> 
+<span class='line'>211</span> </span><span class="COMM">/**
+<span class='line'>212</span>  * @return {boolean} Whether the stack frame contains an anonymous function.
+<span class='line'>213</span>  */</span><span class="WHIT">
+<span class='line'>214</span> </span><span class="NAME">webdriver.stacktrace.Frame.prototype.isAnonymous</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>215</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">this.name_</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">this.context_</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">'[object Object]'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>216</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>217</span> 
+<span class='line'>218</span> 
+<span class='line'>219</span> </span><span class="COMM">/**
+<span class='line'>220</span>  * Converts this frame to its string representation using V8's stack trace
+<span class='line'>221</span>  * format: http://code.google.com/p/v8/wiki/JavaScriptStackTraceApi
+<span class='line'>222</span>  * @return {string} The string representation of this frame.
+<span class='line'>223</span>  * @override
+<span class='line'>224</span>  */</span><span class="WHIT">
+<span class='line'>225</span> </span><span class="NAME">webdriver.stacktrace.Frame.prototype.toString</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>226</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.context_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>227</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'new '</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>228</span> </span><span class="WHIT">    </span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'.'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>229</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>230</span> </span><span class="WHIT">  </span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.name_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>231</span> </span><span class="WHIT">  </span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.alias_</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">' [as '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this.alias_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">']'</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>232</span> 
+<span class='line'>233</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">path</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.path_</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">'&lt;anonymous>'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>234</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="STRN">'    at '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">context</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">' ('</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">path</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')'</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">path</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>235</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>236</span> 
+<span class='line'>237</span> 
+<span class='line'>238</span> </span><span class="COMM">/**
+<span class='line'>239</span>  * Maximum length of a string that can be matched with a RegExp on
+<span class='line'>240</span>  * Firefox 3x. Exceeding this approximate length will cause string.match
+<span class='line'>241</span>  * to exceed Firefox's stack quota. This situation can be encountered
+<span class='line'>242</span>  * when goog.globalEval is invoked with a long argument; such as
+<span class='line'>243</span>  * when loading a module.
+<span class='line'>244</span>  * @private {number}
+<span class='line'>245</span>  * @const
+<span class='line'>246</span>  */</span><span class="WHIT">
+<span class='line'>247</span> </span><span class="NAME">webdriver.stacktrace.MAX_FIREFOX_FRAMESTRING_LENGTH_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">500000</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>248</span> 
+<span class='line'>249</span> 
+<span class='line'>250</span> </span><span class="COMM">/**
+<span class='line'>251</span>  * RegExp pattern for JavaScript identifiers. We don't support Unicode
+<span class='line'>252</span>  * identifiers defined in ECMAScript v3.
+<span class='line'>253</span>  * @private {string}
+<span class='line'>254</span>  * @const
+<span class='line'>255</span>  */</span><span class="WHIT">
+<span class='line'>256</span> </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'[a-zA-Z_$][\\w$]*'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>257</span> 
+<span class='line'>258</span> 
+<span class='line'>259</span> </span><span class="COMM">/**
+<span class='line'>260</span>  * Pattern for a matching the type on a fully-qualified name. Forms an
+<span class='line'>261</span>  * optional sub-match on the type. For example, in "foo.bar.baz", will match on
+<span class='line'>262</span>  * "foo.bar".
+<span class='line'>263</span>  * @private {string}
+<span class='line'>264</span>  * @const
+<span class='line'>265</span>  */</span><span class="WHIT">
+<span class='line'>266</span> </span><span class="NAME">webdriver.stacktrace.CONTEXT_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>267</span> </span><span class="WHIT">    </span><span class="STRN">'('</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>268</span> </span><span class="WHIT">    </span><span class="STRN">'(?:\\.'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')*)\\.'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>269</span> 
+<span class='line'>270</span> 
+<span class='line'>271</span> </span><span class="COMM">/**
+<span class='line'>272</span>  * Pattern for matching a fully qualified name. Will create two sub-matches:
+<span class='line'>273</span>  * the type (optional), and the name. For example, in "foo.bar.baz", will
+<span class='line'>274</span>  * match on ["foo.bar", "baz"].
+<span class='line'>275</span>  * @private {string}
+<span class='line'>276</span>  * @const
+<span class='line'>277</span>  */</span><span class="WHIT">
+<span class='line'>278</span> </span><span class="NAME">webdriver.stacktrace.QUALIFIED_NAME_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>279</span> </span><span class="WHIT">    </span><span class="STRN">'(?:'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.CONTEXT_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')?'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>280</span> </span><span class="WHIT">    </span><span class="STRN">'('</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>281</span> 
+<span class='line'>282</span> 
+<span class='line'>283</span> </span><span class="COMM">/**
+<span class='line'>284</span>  * RegExp pattern for function name alias in the V8 stack trace.
+<span class='line'>285</span>  * @private {string}
+<span class='line'>286</span>  * @const
+<span class='line'>287</span>  */</span><span class="WHIT">
+<span class='line'>288</span> </span><span class="NAME">webdriver.stacktrace.V8_ALIAS_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>289</span> </span><span class="WHIT">    </span><span class="STRN">'(?: \\[as ('</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')\\])?'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>290</span> 
+<span class='line'>291</span> 
+<span class='line'>292</span> </span><span class="COMM">/**
+<span class='line'>293</span>  * RegExp pattern for function names and constructor calls in the V8 stack
+<span class='line'>294</span>  * trace.
+<span class='line'>295</span>  * @private {string}
+<span class='line'>296</span>  * @const
+<span class='line'>297</span>  */</span><span class="WHIT">
+<span class='line'>298</span> </span><span class="NAME">webdriver.stacktrace.V8_FUNCTION_NAME_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>299</span> </span><span class="WHIT">    </span><span class="STRN">'(?:'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'|&lt;anonymous>)'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>300</span> 
+<span class='line'>301</span> 
+<span class='line'>302</span> </span><span class="COMM">/**
+<span class='line'>303</span>  * RegExp pattern for the context of a function call in V8. Creates two
+<span class='line'>304</span>  * submatches, only one of which will ever match: either the namespace
+<span class='line'>305</span>  * identifier (with optional "new" keyword in the case of a constructor call),
+<span class='line'>306</span>  * or just the "new " phrase for a top level constructor call.
+<span class='line'>307</span>  * @private {string}
+<span class='line'>308</span>  * @const
+<span class='line'>309</span>  */</span><span class="WHIT">
+<span class='line'>310</span> </span><span class="NAME">webdriver.stacktrace.V8_CONTEXT_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>311</span> </span><span class="WHIT">    </span><span class="STRN">'(?:((?:new )?(?:\\[object Object\\]|'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>312</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>313</span> </span><span class="WHIT">    </span><span class="STRN">'(?:\\.'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')*)'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>314</span> </span><span class="WHIT">    </span><span class="STRN">')\\.|(new ))'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>315</span> 
+<span class='line'>316</span> 
+<span class='line'>317</span> </span><span class="COMM">/**
+<span class='line'>318</span>  * RegExp pattern for function call in the V8 stack trace.
+<span class='line'>319</span>  * Creates 3 submatches with context object (optional), function name and
+<span class='line'>320</span>  * function alias (optional).
+<span class='line'>321</span>  * @private {string}
+<span class='line'>322</span>  * @const
+<span class='line'>323</span>  */</span><span class="WHIT">
+<span class='line'>324</span> </span><span class="NAME">webdriver.stacktrace.V8_FUNCTION_CALL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>325</span> </span><span class="WHIT">    </span><span class="STRN">' (?:'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.V8_CONTEXT_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')?'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>326</span> </span><span class="WHIT">    </span><span class="STRN">'('</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.V8_FUNCTION_NAME_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>327</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.V8_ALIAS_PATTERN_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>328</span> 
+<span class='line'>329</span> 
+<span class='line'>330</span> </span><span class="COMM">/**
+<span class='line'>331</span>  * RegExp pattern for an URL + position inside the file.
+<span class='line'>332</span>  * @private {string}
+<span class='line'>333</span>  * @const
+<span class='line'>334</span>  */</span><span class="WHIT">
+<span class='line'>335</span> </span><span class="NAME">webdriver.stacktrace.URL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>336</span> </span><span class="WHIT">    </span><span class="STRN">'((?:http|https|file)://[^\\s]+|javascript:.*)'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>337</span> 
+<span class='line'>338</span> 
+<span class='line'>339</span> </span><span class="COMM">/**
+<span class='line'>340</span>  * RegExp pattern for a location string in a V8 stack frame. Creates two
+<span class='line'>341</span>  * submatches for the location, one for enclosed in parentheticals and on
+<span class='line'>342</span>  * where the location appears alone (which will only occur if the location is
+<span class='line'>343</span>  * the only information in the frame).
+<span class='line'>344</span>  * @private {string}
+<span class='line'>345</span>  * @const
+<span class='line'>346</span>  * @see http://code.google.com/p/v8/wiki/JavaScriptStackTraceApi
+<span class='line'>347</span>  */</span><span class="WHIT">
+<span class='line'>348</span> </span><span class="NAME">webdriver.stacktrace.V8_LOCATION_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">' (?:\\((.*)\\)|(.*))'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>349</span> 
+<span class='line'>350</span> 
+<span class='line'>351</span> </span><span class="COMM">/**
+<span class='line'>352</span>  * Regular expression for parsing one stack frame in V8.
+<span class='line'>353</span>  * @private {!RegExp}
+<span class='line'>354</span>  * @const
+<span class='line'>355</span>  */</span><span class="WHIT">
+<span class='line'>356</span> </span><span class="NAME">webdriver.stacktrace.V8_STACK_FRAME_REGEXP_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RegExp</span><span class="PUNC">(</span><span class="STRN">'^    at'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>357</span> </span><span class="WHIT">    </span><span class="STRN">'(?:'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.V8_FUNCTION_CALL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')?'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>358</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.V8_LOCATION_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'$'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>359</span> 
+<span class='line'>360</span> 
+<span class='line'>361</span> </span><span class="COMM">/**
+<span class='line'>362</span>  * RegExp pattern for function names in the Firefox stack trace.
+<span class='line'>363</span>  * Firefox has extended identifiers to deal with inner functions and anonymous
+<span class='line'>364</span>  * functions: https://bugzilla.mozilla.org/show_bug.cgi?id=433529#c9
+<span class='line'>365</span>  * @private {string}
+<span class='line'>366</span>  * @const
+<span class='line'>367</span>  */</span><span class="WHIT">
+<span class='line'>368</span> </span><span class="NAME">webdriver.stacktrace.FIREFOX_FUNCTION_NAME_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>369</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'[\\w./&lt;$]*'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>370</span> 
+<span class='line'>371</span> 
+<span class='line'>372</span> </span><span class="COMM">/**
+<span class='line'>373</span>  * RegExp pattern for function call in the Firefox stack trace.
+<span class='line'>374</span>  * Creates a submatch for the function name.
+<span class='line'>375</span>  * @private {string}
+<span class='line'>376</span>  * @const
+<span class='line'>377</span>  */</span><span class="WHIT">
+<span class='line'>378</span> </span><span class="NAME">webdriver.stacktrace.FIREFOX_FUNCTION_CALL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>379</span> </span><span class="WHIT">    </span><span class="STRN">'('</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.FIREFOX_FUNCTION_NAME_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')?'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>380</span> </span><span class="WHIT">    </span><span class="STRN">'(?:\\(.*\\))?@'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>381</span> 
+<span class='line'>382</span> 
+<span class='line'>383</span> </span><span class="COMM">/**
+<span class='line'>384</span>  * Regular expression for parsing one stack frame in Firefox.
+<span class='line'>385</span>  * @private {!RegExp}
+<span class='line'>386</span>  * @const
+<span class='line'>387</span>  */</span><span class="WHIT">
+<span class='line'>388</span> </span><span class="NAME">webdriver.stacktrace.FIREFOX_STACK_FRAME_REGEXP_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RegExp</span><span class="PUNC">(</span><span class="STRN">'^'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>389</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.FIREFOX_FUNCTION_CALL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>390</span> </span><span class="WHIT">    </span><span class="STRN">'(?::0|'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.URL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')$'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>391</span> 
+<span class='line'>392</span> 
+<span class='line'>393</span> </span><span class="COMM">/**
+<span class='line'>394</span>  * RegExp pattern for an anonymous function call in an Opera stack frame.
+<span class='line'>395</span>  * Creates 2 (optional) submatches: the context object and function name.
+<span class='line'>396</span>  * @private {string}
+<span class='line'>397</span>  * @const
+<span class='line'>398</span>  */</span><span class="WHIT">
+<span class='line'>399</span> </span><span class="NAME">webdriver.stacktrace.OPERA_ANONYMOUS_FUNCTION_NAME_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>400</span> </span><span class="WHIT">    </span><span class="STRN">'&lt;anonymous function(?:\\: '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>401</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.QUALIFIED_NAME_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')?>'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>402</span> 
+<span class='line'>403</span> 
+<span class='line'>404</span> </span><span class="COMM">/**
+<span class='line'>405</span>  * RegExp pattern for a function call in an Opera stack frame.
+<span class='line'>406</span>  * Creates 3 (optional) submatches: the function name (if not anonymous),
+<span class='line'>407</span>  * the aliased context object and the function name (if anonymous).
+<span class='line'>408</span>  * @private {string}
+<span class='line'>409</span>  * @const
+<span class='line'>410</span>  */</span><span class="WHIT">
+<span class='line'>411</span> </span><span class="NAME">webdriver.stacktrace.OPERA_FUNCTION_CALL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>412</span> </span><span class="WHIT">    </span><span class="STRN">'(?:(?:('</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')|'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>413</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.OPERA_ANONYMOUS_FUNCTION_NAME_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>414</span> </span><span class="WHIT">    </span><span class="STRN">')(?:\\(.*\\)))?@'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>415</span> 
+<span class='line'>416</span> 
+<span class='line'>417</span> </span><span class="COMM">/**
+<span class='line'>418</span>  * Regular expression for parsing on stack frame in Opera 11.68+
+<span class='line'>419</span>  * @private {!RegExp}
+<span class='line'>420</span>  * @const
+<span class='line'>421</span>  */</span><span class="WHIT">
+<span class='line'>422</span> </span><span class="NAME">webdriver.stacktrace.OPERA_STACK_FRAME_REGEXP_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RegExp</span><span class="PUNC">(</span><span class="STRN">'^'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>423</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.OPERA_FUNCTION_CALL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>424</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.URL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'?$'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>425</span> 
+<span class='line'>426</span> 
+<span class='line'>427</span> </span><span class="COMM">/**
+<span class='line'>428</span>  * RegExp pattern for function call in a Chakra (IE) stack trace. This
+<span class='line'>429</span>  * expression allows for identifiers like 'Anonymous function', 'eval code',
+<span class='line'>430</span>  * and 'Global code'.
+<span class='line'>431</span>  * @private {string}
+<span class='line'>432</span>  * @const
+<span class='line'>433</span>  */</span><span class="WHIT">
+<span class='line'>434</span> </span><span class="NAME">webdriver.stacktrace.CHAKRA_FUNCTION_CALL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'('</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>435</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.IDENTIFIER_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'(?:\\s+\\w+)*)'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>436</span> 
+<span class='line'>437</span> 
+<span class='line'>438</span> </span><span class="COMM">/**
+<span class='line'>439</span>  * Regular expression for parsing on stack frame in Chakra (IE).
+<span class='line'>440</span>  * @private {!RegExp}
+<span class='line'>441</span>  * @const
+<span class='line'>442</span>  */</span><span class="WHIT">
+<span class='line'>443</span> </span><span class="NAME">webdriver.stacktrace.CHAKRA_STACK_FRAME_REGEXP_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RegExp</span><span class="PUNC">(</span><span class="STRN">'^   at '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>444</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.CHAKRA_FUNCTION_CALL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>445</span> </span><span class="WHIT">    </span><span class="STRN">'\\s*(?:\\((.*)\\))$'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>446</span> 
+<span class='line'>447</span> 
+<span class='line'>448</span> </span><span class="COMM">/**
+<span class='line'>449</span>  * Placeholder for an unparsable frame in a stack trace generated by
+<span class='line'>450</span>  * {@link goog.testing.stacktrace}.
+<span class='line'>451</span>  * @private {string}
+<span class='line'>452</span>  * @const
+<span class='line'>453</span>  */</span><span class="WHIT">
+<span class='line'>454</span> </span><span class="NAME">webdriver.stacktrace.UNKNOWN_CLOSURE_FRAME_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'> (unknown)'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>455</span> 
+<span class='line'>456</span> 
+<span class='line'>457</span> </span><span class="COMM">/**
+<span class='line'>458</span>  * Representation of an anonymous frame in a stack trace generated by
+<span class='line'>459</span>  * {@link goog.testing.stacktrace}.
+<span class='line'>460</span>  * @private {string}
+<span class='line'>461</span>  * @const
+<span class='line'>462</span>  */</span><span class="WHIT">
+<span class='line'>463</span> </span><span class="NAME">webdriver.stacktrace.ANONYMOUS_CLOSURE_FRAME_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'> anonymous'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>464</span> 
+<span class='line'>465</span> 
+<span class='line'>466</span> </span><span class="COMM">/**
+<span class='line'>467</span>  * Pattern for a function call in a Closure stack trace. Creates three optional
+<span class='line'>468</span>  * submatches: the context, function name, and alias.
+<span class='line'>469</span>  * @private {string}
+<span class='line'>470</span>  * @const
+<span class='line'>471</span>  */</span><span class="WHIT">
+<span class='line'>472</span> </span><span class="NAME">webdriver.stacktrace.CLOSURE_FUNCTION_CALL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>473</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.QUALIFIED_NAME_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>474</span> </span><span class="WHIT">    </span><span class="STRN">'(?:\\(.*\\))?'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">  </span><span class="COMM">// Ignore arguments if present.</span><span class="WHIT">
+<span class='line'>475</span> </span><span class="WHIT">    </span><span class="NAME">webdriver.stacktrace.V8_ALIAS_PATTERN_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>476</span> 
+<span class='line'>477</span> 
+<span class='line'>478</span> </span><span class="COMM">/**
+<span class='line'>479</span>  * Regular expression for parsing a stack frame generated by Closure's
+<span class='line'>480</span>  * {@link goog.testing.stacktrace}.
+<span class='line'>481</span>  * @private {!RegExp}
+<span class='line'>482</span>  * @const
+<span class='line'>483</span>  */</span><span class="WHIT">
+<span class='line'>484</span> </span><span class="NAME">webdriver.stacktrace.CLOSURE_STACK_FRAME_REGEXP_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RegExp</span><span class="PUNC">(</span><span class="STRN">'^> '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>485</span> </span><span class="WHIT">    </span><span class="STRN">'(?:'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.CLOSURE_FUNCTION_CALL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>486</span> </span><span class="WHIT">    </span><span class="STRN">'(?: at )?)?'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>487</span> </span><span class="WHIT">    </span><span class="STRN">'(?:(.*:\\d+:\\d+)|'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.URL_PATTERN_</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">')?$'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>488</span> 
+<span class='line'>489</span> 
+<span class='line'>490</span> </span><span class="COMM">/**
+<span class='line'>491</span>  * Parses one stack frame.
+<span class='line'>492</span>  * @param {string} frameStr The stack frame as string.
+<span class='line'>493</span>  * @return {webdriver.stacktrace.Frame} Stack frame object or null if the
+<span class='line'>494</span>  *     parsing failed.
+<span class='line'>495</span>  * @private
+<span class='line'>496</span>  */</span><span class="WHIT">
+<span class='line'>497</span> </span><span class="NAME">webdriver.stacktrace.parseStackFrame_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">frameStr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>498</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">m</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">frameStr.match</span><span class="PUNC">(</span><span class="NAME">webdriver.stacktrace.V8_STACK_FRAME_REGEXP_</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>499</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">m</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>500</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.Frame</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>501</span> </span><span class="WHIT">        </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">3</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">4</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">5</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">6</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>502</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>503</span> 
+<span class='line'>504</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">frameStr.length</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT">
+<span class='line'>505</span> </span><span class="WHIT">      </span><span class="NAME">webdriver.stacktrace.MAX_FIREFOX_FRAMESTRING_LENGTH_</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>506</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.parseLongFirefoxFrame_</span><span class="PUNC">(</span><span class="NAME">frameStr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>507</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>508</span> 
+<span class='line'>509</span> </span><span class="WHIT">  </span><span class="NAME">m</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">frameStr.match</span><span class="PUNC">(</span><span class="NAME">webdriver.stacktrace.FIREFOX_STACK_FRAME_REGEXP_</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>510</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">m</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>511</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.Frame</span><span class="PUNC">(</span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>512</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>513</span> 
+<span class='line'>514</span> </span><span class="WHIT">  </span><span class="NAME">m</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">frameStr.match</span><span class="PUNC">(</span><span class="NAME">webdriver.stacktrace.OPERA_STACK_FRAME_REGEXP_</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>515</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">m</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>516</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.Frame</span><span class="PUNC">(</span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">3</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">4</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>517</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>518</span> 
+<span class='line'>519</span> </span><span class="WHIT">  </span><span class="NAME">m</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">frameStr.match</span><span class="PUNC">(</span><span class="NAME">webdriver.stacktrace.CHAKRA_STACK_FRAME_REGEXP_</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>520</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">m</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>521</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.Frame</span><span class="PUNC">(</span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>522</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>523</span> 
+<span class='line'>524</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">frameStr</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.UNKNOWN_CLOSURE_FRAME_</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT">
+<span class='line'>525</span> </span><span class="WHIT">      </span><span class="NAME">frameStr</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.ANONYMOUS_CLOSURE_FRAME_</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>526</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.ANONYMOUS_FRAME_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>527</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>528</span> 
+<span class='line'>529</span> </span><span class="WHIT">  </span><span class="NAME">m</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">frameStr.match</span><span class="PUNC">(</span><span class="NAME">webdriver.stacktrace.CLOSURE_STACK_FRAME_REGEXP_</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>530</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">m</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>531</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.Frame</span><span class="PUNC">(</span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">3</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">4</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">m</span><span class="PUNC">[</span><span class="NUMB">5</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>532</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>533</span> 
+<span class='line'>534</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>535</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>536</span> 
+<span class='line'>537</span> 
+<span class='line'>538</span> </span><span class="COMM">/**
+<span class='line'>539</span>  * Parses a long firefox stack frame.
+<span class='line'>540</span>  * @param {string} frameStr The stack frame as string.
+<span class='line'>541</span>  * @return {!webdriver.stacktrace.Frame} Stack frame object.
+<span class='line'>542</span>  * @private
+<span class='line'>543</span>  */</span><span class="WHIT">
+<span class='line'>544</span> </span><span class="NAME">webdriver.stacktrace.parseLongFirefoxFrame_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">frameStr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>545</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">firstParen</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">frameStr.indexOf</span><span class="PUNC">(</span><span class="STRN">'('</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>546</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">lastAmpersand</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">frameStr.lastIndexOf</span><span class="PUNC">(</span><span class="STRN">'@'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>547</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">lastColon</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">frameStr.lastIndexOf</span><span class="PUNC">(</span><span class="STRN">':'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>548</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">functionName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>549</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">firstParen</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">firstParen</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">lastAmpersand</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>550</span> </span><span class="WHIT">    </span><span class="NAME">functionName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">frameStr.substring</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">firstParen</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>551</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>552</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">loc</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>553</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">lastAmpersand</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">lastAmpersand</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">lastColon</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>554</span> </span><span class="WHIT">    </span><span class="NAME">loc</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">frameStr.substring</span><span class="PUNC">(</span><span class="NAME">lastAmpersand</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>555</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>556</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.Frame</span><span class="PUNC">(</span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">functionName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">loc</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>557</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>558</span> 
+<span class='line'>559</span> 
+<span class='line'>560</span> </span><span class="COMM">/**
+<span class='line'>561</span>  * Get an error's stack trace with the error string trimmed.
+<span class='line'>562</span>  * V8 prepends the string representation of an error to its stack trace.
+<span class='line'>563</span>  * This function trims the string so that the stack trace can be parsed
+<span class='line'>564</span>  * consistently with the other JS engines.
+<span class='line'>565</span>  * @param {!(Error|goog.testing.JsUnitException)} error The error.
+<span class='line'>566</span>  * @return {string} The stack trace string.
+<span class='line'>567</span>  * @private
+<span class='line'>568</span>  */</span><span class="WHIT">
+<span class='line'>569</span> </span><span class="NAME">webdriver.stacktrace.getStack_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">error</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>570</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">stack</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">error.stack</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">error.stackTrace</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>571</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">errorStr</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">error</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'\n'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>572</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">goog.string.startsWith</span><span class="PUNC">(</span><span class="NAME">stack</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">errorStr</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>573</span> </span><span class="WHIT">    </span><span class="NAME">stack</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">stack.substring</span><span class="PUNC">(</span><span class="NAME">errorStr.length</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>574</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>575</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">stack</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>576</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>577</span> 
+<span class='line'>578</span> 
+<span class='line'>579</span> </span><span class="COMM">/**
+<span class='line'>580</span>  * Formats an error's stack trace.
+<span class='line'>581</span>  * @param {!(Error|goog.testing.JsUnitException)} error The error to format.
+<span class='line'>582</span>  * @return {!(Error|goog.testing.JsUnitException)} The formatted error.
+<span class='line'>583</span>  */</span><span class="WHIT">
+<span class='line'>584</span> </span><span class="NAME">webdriver.stacktrace.format</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">error</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>585</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">stack</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.getStack_</span><span class="PUNC">(</span><span class="NAME">error</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>586</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">frames</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.parse_</span><span class="PUNC">(</span><span class="NAME">stack</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>587</span> 
+<span class='line'>588</span> </span><span class="WHIT">  </span><span class="COMM">// Older versions of IE simply return [object Error] for toString(), so</span><span class="WHIT">
+<span class='line'>589</span> </span><span class="WHIT">  </span><span class="COMM">// only use that as a last resort.</span><span class="WHIT">
+<span class='line'>590</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">errorStr</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>591</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">error.message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>592</span> </span><span class="WHIT">    </span><span class="NAME">errorStr</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">error.name</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">error.name</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">': '</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">error.message</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>593</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>594</span> </span><span class="WHIT">    </span><span class="NAME">errorStr</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">error.toString</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>595</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>596</span> 
+<span class='line'>597</span> </span><span class="WHIT">  </span><span class="COMM">// Ensure the error is in the V8 style with the error's string representation</span><span class="WHIT">
+<span class='line'>598</span> </span><span class="WHIT">  </span><span class="COMM">// prepended to the stack.</span><span class="WHIT">
+<span class='line'>599</span> </span><span class="WHIT">  </span><span class="NAME">error.stack</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">errorStr</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'\n'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">frames.join</span><span class="PUNC">(</span><span class="STRN">'\n'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>600</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">error</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>601</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>602</span> 
+<span class='line'>603</span> 
+<span class='line'>604</span> </span><span class="COMM">/**
+<span class='line'>605</span>  * Parses an Error object's stack trace.
+<span class='line'>606</span>  * @param {string} stack The stack trace.
+<span class='line'>607</span>  * @return {!Array.&lt;!webdriver.stacktrace.Frame>} Stack frames. The
+<span class='line'>608</span>  *     unrecognized frames will be nulled out.
+<span class='line'>609</span>  * @private
+<span class='line'>610</span>  */</span><span class="WHIT">
+<span class='line'>611</span> </span><span class="NAME">webdriver.stacktrace.parse_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">stack</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>612</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">stack</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>613</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>614</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>615</span> 
+<span class='line'>616</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">lines</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">stack.</span><span class="WHIT">
+<span class='line'>617</span> </span><span class="WHIT">      </span><span class="NAME">replace</span><span class="PUNC">(</span><span class="REGX">/\s*$/</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="WHIT">
+<span class='line'>618</span> </span><span class="WHIT">      </span><span class="NAME">split</span><span class="PUNC">(</span><span class="STRN">'\n'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>619</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">frames</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>620</span> </span><span class="WHIT">  </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">lines.length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>621</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">frame</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.parseStackFrame_</span><span class="PUNC">(</span><span class="NAME">lines</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>622</span> </span><span class="WHIT">    </span><span class="COMM">// The first two frames will be:</span><span class="WHIT">
+<span class='line'>623</span> </span><span class="WHIT">    </span><span class="COMM">//   webdriver.stacktrace.Snapshot()</span><span class="WHIT">
+<span class='line'>624</span> </span><span class="WHIT">    </span><span class="COMM">//   webdriver.stacktrace.get()</span><span class="WHIT">
+<span class='line'>625</span> </span><span class="WHIT">    </span><span class="COMM">// In the case of Opera, sometimes an extra frame is injected in the next</span><span class="WHIT">
+<span class='line'>626</span> </span><span class="WHIT">    </span><span class="COMM">// frame with a reported line number of zero. The next line detects that</span><span class="WHIT">
+<span class='line'>627</span> </span><span class="WHIT">    </span><span class="COMM">// case and skips that frame.</span><span class="WHIT">
+<span class='line'>628</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="NAME">goog.userAgent.OPERA</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">frame.getLine</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>629</span> </span><span class="WHIT">      </span><span class="NAME">frames.push</span><span class="PUNC">(</span><span class="NAME">frame</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.ANONYMOUS_FRAME_</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>630</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>631</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>632</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">frames</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>633</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>634</span> 
+<span class='line'>635</span> 
+<span class='line'>636</span> </span><span class="COMM">/**
+<span class='line'>637</span>  * Gets the native stack trace if available otherwise follows the call chain.
+<span class='line'>638</span>  * The generated trace will exclude all frames up to and including the call to
+<span class='line'>639</span>  * this function.
+<span class='line'>640</span>  * @return {!Array.&lt;!webdriver.stacktrace.Frame>} The frames of the stack trace.
+<span class='line'>641</span>  */</span><span class="WHIT">
+<span class='line'>642</span> </span><span class="NAME">webdriver.stacktrace.get</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>643</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.stacktrace.Snapshot</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">getStacktrace</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>644</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>645</span> </span></pre></body></html>

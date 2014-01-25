@@ -1,0 +1,1988 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - webdriver.WebDriver</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/bot.Error.html">bot.Error</a></li>
+	
+	<li><a href="../symbols/Build.html">Build</a></li>
+	
+	<li><a href="../symbols/goog.inherits-tempCtor.html">goog.inherits-tempCtor</a></li>
+	
+	<li><a href="../symbols/Server.html">Server</a></li>
+	
+	<li><a href="../symbols/TestEnvironment.html">TestEnvironment</a></li>
+	
+	<li><a href="../symbols/webdriver.AbstractBuilder.html">webdriver.AbstractBuilder</a></li>
+	
+	<li><a href="../symbols/webdriver.ActionSequence.html">webdriver.ActionSequence</a></li>
+	
+	<li><a href="../symbols/webdriver.Alert.html">webdriver.Alert</a></li>
+	
+	<li><a href="../symbols/webdriver.Builder.html">webdriver.Builder</a></li>
+	
+	<li><a href="../symbols/webdriver.Capabilities.html">webdriver.Capabilities</a></li>
+	
+	<li><a href="../symbols/webdriver.Command.html">webdriver.Command</a></li>
+	
+	<li><a href="../symbols/webdriver.EventEmitter.html">webdriver.EventEmitter</a></li>
+	
+	<li><a href="../symbols/webdriver.FirefoxDomExecutor.html">webdriver.FirefoxDomExecutor</a></li>
+	
+	<li><a href="../symbols/webdriver.Locator.html">webdriver.Locator</a></li>
+	
+	<li><a href="../symbols/webdriver.logging.Entry.html">webdriver.logging.Entry</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.Deferred.html">webdriver.promise.Deferred</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a></li>
+	
+	<li><a href="../symbols/webdriver.Session.html">webdriver.Session</a></li>
+	
+	<li><a href="../symbols/webdriver.stacktrace.Frame.html">webdriver.stacktrace.Frame</a></li>
+	
+	<li><a href="../symbols/webdriver.stacktrace.Snapshot.html">webdriver.stacktrace.Snapshot</a></li>
+	
+	<li><a href="../symbols/webdriver.UnhandledAlertError.html">webdriver.UnhandledAlertError</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Logs.html">webdriver.WebDriver.Logs</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Navigation.html">webdriver.WebDriver.Navigation</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Options.html">webdriver.WebDriver.Options</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.TargetLocator.html">webdriver.WebDriver.TargetLocator</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Timeouts.html">webdriver.WebDriver.Timeouts</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Window.html">webdriver.WebDriver.Window</a></li>
+	
+	<li><a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class webdriver.WebDriver
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				
+			
+				
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/_selenium-webdriver_lib_webdriver_webdriver.js.html">webdriver.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class webdriver.WebDriver.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/webdriver.WebDriver.html#constructor">webdriver.WebDriver</a></b>(session, executor, opt_flow)
+							</div>
+							<div class="description">Creates a new WebDriver client, which provides control over a browser.</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class webdriver.WebDriver.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#actions">actions</a></b>()
+								</div>
+								<div class="description">Creates a new action sequence using this driver.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">webdriver.WebDriver.<b><a href="../symbols/webdriver.WebDriver.html#.attachToSession">attachToSession</a></b>(executor, sessionId)
+								</div>
+								<div class="description">Creates a new WebDriver client for an existing session.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#call">call</a></b>(fn, opt_scope, var_args)
+								</div>
+								<div class="description">Schedules a command to execute a custom function.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#close">close</a></b>()
+								</div>
+								<div class="description">Schedules a command to close the current window.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#controlFlow">controlFlow</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">webdriver.WebDriver.<b><a href="../symbols/webdriver.WebDriver.html#.createSession">createSession</a></b>(executor, desiredCapabilities)
+								</div>
+								<div class="description">Creates a new WebDriver session.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#executeAsyncScript">executeAsyncScript</a></b>(script, var_args)
+								</div>
+								<div class="description">Schedules a command to execute asynchronous JavaScript in the context of the
+currently selected frame or window.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#executeScript">executeScript</a></b>(script, var_args)
+								</div>
+								<div class="description">Schedules a command to execute JavaScript in the context of the currently
+selected frame or window.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#findElement">findElement</a></b>(locatorOrElement, var_args)
+								</div>
+								<div class="description">Schedule a command to find an element on the page.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#findElements">findElements</a></b>(locator, var_args)
+								</div>
+								<div class="description">Schedule a command to search for multiple elements on the page.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#get">get</a></b>(url)
+								</div>
+								<div class="description">Schedules a command to navigate to the given URL.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#getAllWindowHandles">getAllWindowHandles</a></b>()
+								</div>
+								<div class="description">Schedules a command to retrieve the current list of available window handles.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#getCapabilities">getCapabilities</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#getCapability">getCapability</a></b>(name)
+								</div>
+								<div class="description">Returns a promise for one of this driver's capabilities.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#getCurrentUrl">getCurrentUrl</a></b>()
+								</div>
+								<div class="description">Schedules a command to retrieve the URL of the current page.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#getPageSource">getPageSource</a></b>()
+								</div>
+								<div class="description">Schedules a command to retrieve the current page's source.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#getSession">getSession</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#getTitle">getTitle</a></b>()
+								</div>
+								<div class="description">Schedules a command to retrieve the current page's title.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#getWindowHandle">getWindowHandle</a></b>()
+								</div>
+								<div class="description">Schedules a command to retrieve they current window handle.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#isElementPresent">isElementPresent</a></b>(locatorOrElement, var_args)
+								</div>
+								<div class="description">Schedules a command to test if an element is present on the page.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#manage">manage</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#navigate">navigate</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#quit">quit</a></b>()
+								</div>
+								<div class="description">Schedules a command to quit the current session.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#schedule">schedule</a></b>(command, description)
+								</div>
+								<div class="description">Schedules a {@code webdriver.Command} to be executed by this driver's
+{@code webdriver.CommandExecutor}.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#sleep">sleep</a></b>(ms)
+								</div>
+								<div class="description">Schedules a command to make the driver sleep for the given amount of time.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#switchTo">switchTo</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#takeScreenshot">takeScreenshot</a></b>()
+								</div>
+								<div class="description">Schedule a command to take a screenshot.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.WebDriver.html#wait">wait</a></b>(fn, timeout, opt_message)
+								</div>
+								<div class="description">Schedules a command to wait for a condition to hold, as defined by some
+user supplied function.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>webdriver.WebDriver</b>(session, executor, opt_flow)
+				</div>
+				
+				<div class="description">
+					Creates a new WebDriver client, which provides control over a browser.
+
+Every WebDriver command returns a {@code webdriver.promise.Promise} that
+represents the result of that command. Callbacks may be registered on this
+object to manipulate the command result or catch an expected error. Any
+commands scheduled with a callback are considered sub-commands and will
+execute before the next command in the current frame. For example:
+<pre><code>
+  var message = [];
+  driver.call(message.push, message, 'a').then(function() {
+    driver.call(message.push, message, 'b');
+  });
+  driver.call(message.push, message, 'c');
+  driver.call(function() {
+    alert('message is abc? ' + (message.join('') == 'abc'));
+  });
+</code></pre>
+					
+				</div>
+				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{!(<a href="../symbols/webdriver.Session.html">webdriver.Session</a>|<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>)}</span>  <b>session</b>
+								
+							</dt>
+								<dd>Either a
+    known session or a promise that will be resolved to a session.</dd>
+						
+							<dt>
+								<span class="light fixedFont">{!<a href="../symbols/webdriver.html#.CommandExecutor">webdriver.CommandExecutor</a>}</span>  <b>executor</b>
+								
+							</dt>
+								<dd>The executor to use when
+    sending commands to the browser.</dd>
+						
+							<dt>
+								<span class="light fixedFont">{<a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a>=}</span>  <b>opt_flow</b>
+								
+							</dt>
+								<dd>The flow to
+    schedule commands through. Defaults to the active flow object.</dd>
+						
+						</dl>
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="actions"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span>
+					<b>actions</b>()
+					
+					</div>
+					<div class="description">
+						Creates a new action sequence using this driver. The sequence will not be
+scheduled for execution until <a href="../symbols/webdriver.ActionSequence.html#perform">webdriver.ActionSequence#perform</a> is
+called. Example:
+<pre><code>
+  driver.actions().
+      mouseDown(element1).
+      mouseMove(element2).
+      mouseUp().
+      perform();
+</code></pre>
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span> A new action sequence for this instance.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".attachToSession"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{!<a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a>}</span>
+					<span class="light">webdriver.WebDriver.</span><b>attachToSession</b>(executor, sessionId)
+					
+					</div>
+					<div class="description">
+						Creates a new WebDriver client for an existing session.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!<a href="../symbols/webdriver.html#.CommandExecutor">webdriver.CommandExecutor</a>}</span> <b>executor</b>
+									
+								</dt>
+								<dd>Command executor to use when
+    querying for session details.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>sessionId</b>
+									
+								</dt>
+								<dd>ID of the session to attach to.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a>}</span> A new client for the specified session.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="call"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>call</b>(fn, opt_scope, var_args)
+					
+					</div>
+					<div class="description">
+						Schedules a command to execute a custom function.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!Function}</span> <b>fn</b>
+									
+								</dt>
+								<dd>The function to execute.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Object=}</span> <b>opt_scope</b>
+									
+								</dt>
+								<dd>The object in whose scope to execute the function.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{...*}</span> <b>var_args</b>
+									
+								</dt>
+								<dd>Any arguments to pass to the function.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    function's result.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="close"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>close</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to close the current window.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when
+    this command has completed.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="controlFlow"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a>}</span>
+					<b>controlFlow</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a>}</span> The control flow used by this
+    instance.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".createSession"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{!<a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a>}</span>
+					<span class="light">webdriver.WebDriver.</span><b>createSession</b>(executor, desiredCapabilities)
+					
+					</div>
+					<div class="description">
+						Creates a new WebDriver session.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!<a href="../symbols/webdriver.html#.CommandExecutor">webdriver.CommandExecutor</a>}</span> <b>executor</b>
+									
+								</dt>
+								<dd>The executor to create the new
+    session with.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{!<a href="../symbols/webdriver.Capabilities.html">webdriver.Capabilities</a>}</span> <b>desiredCapabilities</b>
+									
+								</dt>
+								<dd>The desired
+    capabilities for the new session.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a>}</span> The driver for the newly created session.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="executeAsyncScript"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>executeAsyncScript</b>(script, var_args)
+					
+					</div>
+					<div class="description">
+						Schedules a command to execute asynchronous JavaScript in the context of the
+currently selected frame or window. The script fragment will be executed as
+the body of an anonymous function. If the script is provided as a function
+object, that function will be converted to a string for injection into the
+target window.
+
+Any arguments provided in addition to the script will be included as script
+arguments and may be referenced using the {@code arguments} object.
+Arguments may be a boolean, number, string, or {@code webdriver.WebElement}.
+Arrays and objects may also be used as script arguments as long as each item
+adheres to the types previously mentioned.
+
+Unlike executing synchronous JavaScript with
+{@code webdriver.WebDriver.prototype.executeScript}, scripts executed with
+this function must explicitly signal they are finished by invoking the
+provided callback. This callback will always be injected into the
+executed function as the last argument, and thus may be referenced with
+{@code arguments[arguments.length - 1]}. The following steps will be taken
+for resolving this functions return value against the first argument to the
+script's callback function:
+<ul>
+<li>For a HTML element, the value will resolve to a
+    {@code webdriver.WebElement}</li>
+<li>Null and undefined return values will resolve to null</li>
+<li>Booleans, numbers, and strings will resolve as is</li>
+<li>Functions will resolve to their string representation</li>
+<li>For arrays and objects, each member item will be converted according to
+    the rules above</li>
+</ul>
+
+Example #1: Performing a sleep that is synchronized with the currently
+selected window:
+<code><pre>
+var start = new Date().getTime();
+driver.executeAsyncScript(
+    'window.setTimeout(arguments[arguments.length - 1], 500);').
+    then(function() {
+      console.log('Elapsed time: ' + (new Date().getTime() - start) + ' ms');
+    });
+</pre></code>
+
+Example #2: Synchronizing a test with an AJAX application:
+<code><pre>
+var button = driver.findElement(By.id('compose-button'));
+button.click();
+driver.executeAsyncScript(
+    'var callback = arguments[arguments.length - 1];' +
+    'mailClient.getComposeWindowWidget().onload(callback);');
+driver.switchTo().frame('composeWidget');
+driver.findElement(By.id('to')).sendKEys('dog@example.com');
+</pre></code>
+
+Example #3: Injecting a XMLHttpRequest and waiting for the result. In this
+example, the inject script is specified with a function literal. When using
+this format, the function is converted to a string for injection, so it
+should not reference any symbols not defined in the scope of the page under
+test.
+<code><pre>
+driver.executeAsyncScript(function() {
+  var callback = arguments[arguments.length - 1];
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/resource/data.json", true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      callback(xhr.resposneText);
+    }
+  }
+  xhr.send('');
+}).then(function(str) {
+  console.log(JSON.parse(str)['food']);
+});
+</pre></code>
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!(string|Function)}</span> <b>script</b>
+									
+								</dt>
+								<dd>The script to execute.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{...*}</span> <b>var_args</b>
+									
+								</dt>
+								<dd>The arguments to pass to the script.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will resolve to the
+   scripts return value.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="executeScript"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>executeScript</b>(script, var_args)
+					
+					</div>
+					<div class="description">
+						Schedules a command to execute JavaScript in the context of the currently
+selected frame or window. The script fragment will be executed as the body
+of an anonymous function. If the script is provided as a function object,
+that function will be converted to a string for injection into the target
+window.
+
+Any arguments provided in addition to the script will be included as script
+arguments and may be referenced using the {@code arguments} object.
+Arguments may be a boolean, number, string, or {@code webdriver.WebElement}.
+Arrays and objects may also be used as script arguments as long as each item
+adheres to the types previously mentioned.
+
+The script may refer to any variables accessible from the current window.
+Furthermore, the script will execute in the window's context, thus
+{@code document} may be used to refer to the current document. Any local
+variables will not be available once the script has finished executing,
+though global variables will persist.
+
+If the script has a return value (i.e. if the script contains a return
+statement), then the following steps will be taken for resolving this
+functions return value:
+<ul>
+<li>For a HTML element, the value will resolve to a
+    {@code webdriver.WebElement}</li>
+<li>Null and undefined return values will resolve to null</li>
+<li>Booleans, numbers, and strings will resolve as is</li>
+<li>Functions will resolve to their string representation</li>
+<li>For arrays and objects, each member item will be converted according to
+    the rules above</li>
+</ul>
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!(string|Function)}</span> <b>script</b>
+									
+								</dt>
+								<dd>The script to execute.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{...*}</span> <b>var_args</b>
+									
+								</dt>
+								<dd>The arguments to pass to the script.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will resolve to the
+   scripts return value.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="findElement"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a>}</span>
+					<b>findElement</b>(locatorOrElement, var_args)
+					
+					</div>
+					<div class="description">
+						Schedule a command to find an element on the page. If the element cannot be
+found, a {@code bot.ErrorCode.NO_SUCH_ELEMENT} result will be returned
+by the driver. Unlike other commands, this error cannot be suppressed. In
+other words, scheduling a command to find an element doubles as an assert
+that the element is present on the page. To test whether an element is
+present on the page, use {@code #isElementPresent} instead.
+
+<p>The search criteria for find an element may either be a
+{@code webdriver.Locator} object, or a simple JSON object whose sole key
+is one of the accepted locator strategies, as defined by
+{@code webdriver.Locator.Strategy}. For example, the following two statements
+are equivalent:
+<code><pre>
+var e1 = driver.findElement(By.id('foo'));
+var e2 = driver.findElement({id:'foo'});
+</pre></code>
+
+<p>When running in the browser, a WebDriver cannot manipulate DOM elements
+directly; it may do so only through a <a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a> reference.
+This function may be used to generate a WebElement from a DOM element. A
+reference to the DOM element will be stored in a known location and this
+driver will attempt to retrieve it through <a href="../symbols/webdriver.WebDriver.html#executeScript">#executeScript</a>. If the
+element cannot be found (eg, it belongs to a different document than the
+one this instance is currently focused on), a
+bot.ErrorCode.NO_SUCH_ELEMENT error will be returned.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!(<a href="../symbols/webdriver.Locator.html">webdriver.Locator</a>|Object.<string>|Element)}</span> <b>locatorOrElement</b>
+									
+								</dt>
+								<dd>The
+    locator strategy to use when searching for the element, or the actual
+    DOM element to be located by the server.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{...}</span> <b>var_args</b>
+									
+								</dt>
+								<dd>Arguments to pass to {@code #executeScript} if using a
+    JavaScript locator.  Otherwise ignored.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a>}</span> A WebElement that can be used to issue
+    commands against the located element. If the element is not found, the
+    element will be invalidated and all scheduled commands aborted.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="findElements"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>findElements</b>(locator, var_args)
+					
+					</div>
+					<div class="description">
+						Schedule a command to search for multiple elements on the page.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/webdriver.Locator.html">webdriver.Locator</a>|Object.<string>}</span> <b>locator</b>
+									
+								</dt>
+								<dd>The locator
+    strategy to use when searching for the element.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{...}</span> <b>var_args</b>
+									
+								</dt>
+								<dd>Arguments to pass to {@code #executeScript} if using a
+    JavaScript locator.  Otherwise ignored.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved to an
+    array of the located <a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a>s.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="get"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>get</b>(url)
+					
+					</div>
+					<div class="description">
+						Schedules a command to navigate to the given URL.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>url</b>
+									
+								</dt>
+								<dd>The fully qualified URL to open.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when the
+    document has finished loading.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getAllWindowHandles"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getAllWindowHandles</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to retrieve the current list of available window handles.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with an
+    array of window handles.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getCapabilities"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getCapabilities</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will resolve with the
+    this instance's capabilities.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getCapability"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getCapability</b>(name)
+					
+					</div>
+					<div class="description">
+						Returns a promise for one of this driver's capabilities.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>name</b>
+									
+								</dt>
+								<dd>The name of the capability to query.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Deprecated:</dt>
+							<dt>
+								Use <a href="../symbols/webdriver.WebDriver.html#getCapabilities">#getCapabilities</a>(); this function will be removed
+    in 2.35.0.
+							</dt>
+							</dl>
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will resolve with the
+    given capability once its value is ready.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getCurrentUrl"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getCurrentUrl</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to retrieve the URL of the current page.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    current URL.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getPageSource"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getPageSource</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to retrieve the current page's source. The page source
+returned is a representation of the underlying DOM: do not expect it to be
+formatted or escaped in the same way as the response sent from the web
+server.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    current page source.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getSession"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getSession</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise for this client's session.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getTitle"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getTitle</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to retrieve the current page's title.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    current page's title.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getWindowHandle"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>getWindowHandle</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to retrieve they current window handle.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with the
+    current window handle.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="isElementPresent"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>isElementPresent</b>(locatorOrElement, var_args)
+					
+					</div>
+					<div class="description">
+						Schedules a command to test if an element is present on the page.
+
+<p>If given a DOM element, this function will check if it belongs to the
+document the driver is currently focused on. Otherwise, the function will
+test if at least one element can be found with the given search criteria.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!(<a href="../symbols/webdriver.Locator.html">webdriver.Locator</a>|Object.<string>|Element)}</span> <b>locatorOrElement</b>
+									
+								</dt>
+								<dd>The
+    locator strategy to use when searching for the element, or the actual
+    DOM element to be located by the server.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{...}</span> <b>var_args</b>
+									
+								</dt>
+								<dd>Arguments to pass to {@code #executeScript} if using a
+    JavaScript locator.  Otherwise ignored.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will resolve to whether
+    the element is present on the page.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="manage"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.WebDriver.Options.html">webdriver.WebDriver.Options</a>}</span>
+					<b>manage</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.WebDriver.Options.html">webdriver.WebDriver.Options</a>}</span> The options interface for this
+    instance.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="navigate"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.WebDriver.Navigation.html">webdriver.WebDriver.Navigation</a>}</span>
+					<b>navigate</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.WebDriver.Navigation.html">webdriver.WebDriver.Navigation</a>}</span> The navigation interface for this
+    instance.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="quit"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>quit</b>()
+					
+					</div>
+					<div class="description">
+						Schedules a command to quit the current session. After calling quit, this
+instance will be invalidated and may no longer be used to issue commands
+against the browser.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when
+    the command has completed.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="schedule"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>schedule</b>(command, description)
+					
+					</div>
+					<div class="description">
+						Schedules a {@code webdriver.Command} to be executed by this driver's
+{@code webdriver.CommandExecutor}.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!<a href="../symbols/webdriver.Command.html">webdriver.Command</a>}</span> <b>command</b>
+									
+								</dt>
+								<dd>The command to schedule.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>description</b>
+									
+								</dt>
+								<dd>A description of the command for debugging.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved with
+    the command result.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="sleep"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>sleep</b>(ms)
+					
+					</div>
+					<div class="description">
+						Schedules a command to make the driver sleep for the given amount of time.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{number}</span> <b>ms</b>
+									
+								</dt>
+								<dd>The amount of time, in milliseconds, to sleep.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when the
+    sleep has finished.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="switchTo"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.WebDriver.TargetLocator.html">webdriver.WebDriver.TargetLocator</a>}</span>
+					<b>switchTo</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.WebDriver.TargetLocator.html">webdriver.WebDriver.TargetLocator</a>}</span> The target locator interface for
+    this instance.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="takeScreenshot"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>takeScreenshot</b>()
+					
+					</div>
+					<div class="description">
+						Schedule a command to take a screenshot. The driver makes a best effort to
+return a screenshot of the following, in order of preference:
+<ol>
+  <li>Entire page
+  <li>Current window
+  <li>Visible portion of the current frame
+  <li>The screenshot of the entire display containing the browser
+</ol>
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved to the
+    screenshot as a base-64 encoded PNG.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="wait"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>wait</b>(fn, timeout, opt_message)
+					
+					</div>
+					<div class="description">
+						Schedules a command to wait for a condition to hold, as defined by some
+user supplied function. If any errors occur while evaluating the wait, they
+will be allowed to propagate.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{function():boolean}</span> <b>fn</b>
+									
+								</dt>
+								<dd>The function to evaluate as a wait condition.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{number}</span> <b>timeout</b>
+									
+								</dt>
+								<dd>How long to wait for the condition to be true.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{string=}</span> <b>opt_message</b>
+									
+								</dt>
+								<dd>An optional message to use if the wait times
+    out.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A promise that will be resolved when the
+    wait condition has been satisfied.</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Jan 25 2014 14:08:12 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

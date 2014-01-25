@@ -1,0 +1,248 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">// Copyright 2011 Software Freedom Conservancy. All Rights Reserved.</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  3</span> </span><span class="COMM">// Licensed under the Apache License, Version 2.0 (the "License");</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="COMM">// you may not use this file except in compliance with the License.</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="COMM">// You may obtain a copy of the License at</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="COMM">//      http://www.apache.org/licenses/LICENSE-2.0</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="COMM">// Unless required by applicable law or agreed to in writing, software</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="COMM">// distributed under the License is distributed on an "AS IS" BASIS,</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="COMM">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="COMM">// See the License for the specific language governing permissions and</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="COMM">// limitations under the License.</span><span class="WHIT">
+<span class='line'> 14</span> 
+<span class='line'> 15</span> </span><span class="COMM">/**
+<span class='line'> 16</span>  * @fileoverview Contains several classes for handling commands.
+<span class='line'> 17</span>  */</span><span class="WHIT">
+<span class='line'> 18</span> 
+<span class='line'> 19</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'webdriver.Command'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'webdriver.CommandExecutor'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'webdriver.CommandName'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 22</span> 
+<span class='line'> 23</span> 
+<span class='line'> 24</span> 
+<span class='line'> 25</span> </span><span class="COMM">/**
+<span class='line'> 26</span>  * Describes a command to be executed by the WebDriverJS framework.
+<span class='line'> 27</span>  * @param {!webdriver.CommandName} name The name of this command.
+<span class='line'> 28</span>  * @constructor
+<span class='line'> 29</span>  */</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="NAME">webdriver.Command</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 31</span> 
+<span class='line'> 32</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'> 33</span>    * The name of this command.
+<span class='line'> 34</span>    * @private {!webdriver.CommandName}
+<span class='line'> 35</span>    */</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="WHIT">  </span><span class="NAME">this.name_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 37</span> 
+<span class='line'> 38</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'> 39</span>    * The parameters to this command.
+<span class='line'> 40</span>    * @private {!Object.&lt;*>}
+<span class='line'> 41</span>    */</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">  </span><span class="NAME">this.parameters_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> 
+<span class='line'> 45</span> 
+<span class='line'> 46</span> </span><span class="COMM">/**
+<span class='line'> 47</span>  * @return {!webdriver.CommandName} This command's name.
+<span class='line'> 48</span>  */</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="NAME">webdriver.Command.prototype.getName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.name_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 52</span> 
+<span class='line'> 53</span> 
+<span class='line'> 54</span> </span><span class="COMM">/**
+<span class='line'> 55</span>  * Sets a parameter to send with this command.
+<span class='line'> 56</span>  * @param {string} name The parameter name.
+<span class='line'> 57</span>  * @param {*} value The parameter value.
+<span class='line'> 58</span>  * @return {!webdriver.Command} A self reference.
+<span class='line'> 59</span>  */</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="NAME">webdriver.Command.prototype.setParameter</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">  </span><span class="NAME">this.parameters_</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 64</span> 
+<span class='line'> 65</span> 
+<span class='line'> 66</span> </span><span class="COMM">/**
+<span class='line'> 67</span>  * Sets the parameters for this command.
+<span class='line'> 68</span>  * @param {!Object.&lt;*>} parameters The command parameters.
+<span class='line'> 69</span>  * @return {!webdriver.Command} A self reference.
+<span class='line'> 70</span>  */</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="NAME">webdriver.Command.prototype.setParameters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">parameters</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">  </span><span class="NAME">this.parameters_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">parameters</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 75</span> 
+<span class='line'> 76</span> 
+<span class='line'> 77</span> </span><span class="COMM">/**
+<span class='line'> 78</span>  * Returns a named command parameter.
+<span class='line'> 79</span>  * @param {string} key The parameter key to look up.
+<span class='line'> 80</span>  * @return {*} The parameter value, or undefined if it has not been set.
+<span class='line'> 81</span>  */</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="NAME">webdriver.Command.prototype.getParameter</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.parameters_</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 85</span> 
+<span class='line'> 86</span> 
+<span class='line'> 87</span> </span><span class="COMM">/**
+<span class='line'> 88</span>  * @return {!Object.&lt;*>} The parameters to send with this command.
+<span class='line'> 89</span>  */</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="NAME">webdriver.Command.prototype.getParameters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.parameters_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 93</span> 
+<span class='line'> 94</span> 
+<span class='line'> 95</span> </span><span class="COMM">/**
+<span class='line'> 96</span>  * Enumeration of predefined names command names that all command processors
+<span class='line'> 97</span>  * will support.
+<span class='line'> 98</span>  * @enum {string}
+<span class='line'> 99</span>  */</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="COMM">// TODO: Delete obsolete command names.</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="NAME">webdriver.CommandName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">  </span><span class="NAME">GET_SERVER_STATUS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getStatus'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>103</span> 
+<span class='line'>104</span> </span><span class="WHIT">  </span><span class="NAME">NEW_SESSION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'newSession'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">  </span><span class="NAME">GET_SESSIONS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getSessions'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">  </span><span class="NAME">DESCRIBE_SESSION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getSessionCapabilities'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>107</span> 
+<span class='line'>108</span> </span><span class="WHIT">  </span><span class="NAME">CLOSE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'close'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">  </span><span class="NAME">QUIT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'quit'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>110</span> 
+<span class='line'>111</span> </span><span class="WHIT">  </span><span class="NAME">GET_CURRENT_URL</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getCurrentUrl'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="WHIT">  </span><span class="NAME">GET</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'get'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">  </span><span class="NAME">GO_BACK</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'goBack'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">  </span><span class="NAME">GO_FORWARD</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'goForward'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">  </span><span class="NAME">REFRESH</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'refresh'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>116</span> 
+<span class='line'>117</span> </span><span class="WHIT">  </span><span class="NAME">ADD_COOKIE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'addCookie'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">  </span><span class="NAME">GET_COOKIE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getCookie'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">  </span><span class="NAME">GET_ALL_COOKIES</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getCookies'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">  </span><span class="NAME">DELETE_COOKIE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'deleteCookie'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">  </span><span class="NAME">DELETE_ALL_COOKIES</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'deleteAllCookies'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>122</span> 
+<span class='line'>123</span> </span><span class="WHIT">  </span><span class="NAME">GET_ACTIVE_ELEMENT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getActiveElement'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">  </span><span class="NAME">FIND_ELEMENT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'findElement'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">  </span><span class="NAME">FIND_ELEMENTS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'findElements'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">  </span><span class="NAME">FIND_CHILD_ELEMENT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'findChildElement'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">  </span><span class="NAME">FIND_CHILD_ELEMENTS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'findChildElements'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>128</span> 
+<span class='line'>129</span> </span><span class="WHIT">  </span><span class="NAME">CLEAR_ELEMENT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'clearElement'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">  </span><span class="NAME">CLICK_ELEMENT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'clickElement'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">  </span><span class="NAME">SEND_KEYS_TO_ELEMENT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'sendKeysToElement'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">  </span><span class="NAME">SUBMIT_ELEMENT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'submitElement'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>133</span> 
+<span class='line'>134</span> </span><span class="WHIT">  </span><span class="NAME">GET_CURRENT_WINDOW_HANDLE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getCurrentWindowHandle'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">  </span><span class="NAME">GET_WINDOW_HANDLES</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getWindowHandles'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">  </span><span class="NAME">GET_WINDOW_POSITION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getWindowPosition'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">  </span><span class="NAME">SET_WINDOW_POSITION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'setWindowPosition'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">  </span><span class="NAME">GET_WINDOW_SIZE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getWindowSize'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">  </span><span class="NAME">SET_WINDOW_SIZE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'setWindowSize'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="WHIT">  </span><span class="NAME">MAXIMIZE_WINDOW</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'maximizeWindow'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>141</span> 
+<span class='line'>142</span> </span><span class="WHIT">  </span><span class="NAME">SWITCH_TO_WINDOW</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'switchToWindow'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>143</span> </span><span class="WHIT">  </span><span class="NAME">SWITCH_TO_FRAME</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'switchToFrame'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="WHIT">  </span><span class="NAME">GET_PAGE_SOURCE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getPageSource'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">  </span><span class="NAME">GET_TITLE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getTitle'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>146</span> 
+<span class='line'>147</span> </span><span class="WHIT">  </span><span class="NAME">EXECUTE_SCRIPT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'executeScript'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">  </span><span class="NAME">EXECUTE_ASYNC_SCRIPT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'executeAsyncScript'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>149</span> 
+<span class='line'>150</span> </span><span class="WHIT">  </span><span class="NAME">GET_ELEMENT_TEXT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getElementText'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">  </span><span class="NAME">GET_ELEMENT_TAG_NAME</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getElementTagName'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">  </span><span class="NAME">IS_ELEMENT_SELECTED</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'isElementSelected'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">  </span><span class="NAME">IS_ELEMENT_ENABLED</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'isElementEnabled'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">  </span><span class="NAME">IS_ELEMENT_DISPLAYED</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'isElementDisplayed'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>155</span> </span><span class="WHIT">  </span><span class="NAME">GET_ELEMENT_LOCATION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getElementLocation'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">  </span><span class="NAME">GET_ELEMENT_LOCATION_IN_VIEW</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getElementLocationOnceScrolledIntoView'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>157</span> </span><span class="WHIT">  </span><span class="NAME">GET_ELEMENT_SIZE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getElementSize'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">  </span><span class="NAME">GET_ELEMENT_ATTRIBUTE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getElementAttribute'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">  </span><span class="NAME">GET_ELEMENT_VALUE_OF_CSS_PROPERTY</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getElementValueOfCssProperty'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">  </span><span class="NAME">ELEMENT_EQUALS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'elementEquals'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>161</span> 
+<span class='line'>162</span> </span><span class="WHIT">  </span><span class="NAME">SCREENSHOT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'screenshot'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>163</span> </span><span class="WHIT">  </span><span class="NAME">IMPLICITLY_WAIT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'implicitlyWait'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>164</span> </span><span class="WHIT">  </span><span class="NAME">SET_SCRIPT_TIMEOUT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'setScriptTimeout'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>165</span> </span><span class="WHIT">  </span><span class="NAME">SET_TIMEOUT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'setTimeout'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>166</span> 
+<span class='line'>167</span> </span><span class="WHIT">  </span><span class="NAME">ACCEPT_ALERT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'acceptAlert'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>168</span> </span><span class="WHIT">  </span><span class="NAME">DISMISS_ALERT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'dismissAlert'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>169</span> </span><span class="WHIT">  </span><span class="NAME">GET_ALERT_TEXT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getAlertText'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>170</span> </span><span class="WHIT">  </span><span class="NAME">SET_ALERT_TEXT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'setAlertValue'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>171</span> 
+<span class='line'>172</span> </span><span class="WHIT">  </span><span class="NAME">EXECUTE_SQL</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'executeSQL'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>173</span> </span><span class="WHIT">  </span><span class="NAME">GET_LOCATION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getLocation'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>174</span> </span><span class="WHIT">  </span><span class="NAME">SET_LOCATION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'setLocation'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>175</span> </span><span class="WHIT">  </span><span class="NAME">GET_APP_CACHE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getAppCache'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>176</span> </span><span class="WHIT">  </span><span class="NAME">GET_APP_CACHE_STATUS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getStatus'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>177</span> </span><span class="WHIT">  </span><span class="NAME">CLEAR_APP_CACHE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'clearAppCache'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">  </span><span class="NAME">IS_BROWSER_ONLINE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'isBrowserOnline'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">  </span><span class="NAME">SET_BROWSER_ONLINE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'setBrowserOnline'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>180</span> 
+<span class='line'>181</span> </span><span class="WHIT">  </span><span class="NAME">GET_LOCAL_STORAGE_ITEM</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getLocalStorageItem'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>182</span> </span><span class="WHIT">  </span><span class="NAME">GET_LOCAL_STORAGE_KEYS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getLocalStorageKeys'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>183</span> </span><span class="WHIT">  </span><span class="NAME">SET_LOCAL_STORAGE_ITEM</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'setLocalStorageItem'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">  </span><span class="NAME">REMOVE_LOCAL_STORAGE_ITEM</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'removeLocalStorageItem'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>185</span> </span><span class="WHIT">  </span><span class="NAME">CLEAR_LOCAL_STORAGE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'clearLocalStorage'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>186</span> </span><span class="WHIT">  </span><span class="NAME">GET_LOCAL_STORAGE_SIZE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getLocalStorageSize'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>187</span> 
+<span class='line'>188</span> </span><span class="WHIT">  </span><span class="NAME">GET_SESSION_STORAGE_ITEM</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getSessionStorageItem'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>189</span> </span><span class="WHIT">  </span><span class="NAME">GET_SESSION_STORAGE_KEYS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getSessionStorageKey'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>190</span> </span><span class="WHIT">  </span><span class="NAME">SET_SESSION_STORAGE_ITEM</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'setSessionStorageItem'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>191</span> </span><span class="WHIT">  </span><span class="NAME">REMOVE_SESSION_STORAGE_ITEM</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'removeSessionStorageItem'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>192</span> </span><span class="WHIT">  </span><span class="NAME">CLEAR_SESSION_STORAGE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'clearSessionStorage'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>193</span> </span><span class="WHIT">  </span><span class="NAME">GET_SESSION_STORAGE_SIZE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getSessionStorageSize'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>194</span> 
+<span class='line'>195</span> </span><span class="WHIT">  </span><span class="NAME">SET_SCREEN_ORIENTATION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'setScreenOrientation'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>196</span> </span><span class="WHIT">  </span><span class="NAME">GET_SCREEN_ORIENTATION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getScreenOrientation'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>197</span> 
+<span class='line'>198</span> </span><span class="WHIT">  </span><span class="COMM">// These belong to the Advanced user interactions - an element is</span><span class="WHIT">
+<span class='line'>199</span> </span><span class="WHIT">  </span><span class="COMM">// optional for these commands.</span><span class="WHIT">
+<span class='line'>200</span> </span><span class="WHIT">  </span><span class="NAME">CLICK</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'mouseClick'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>201</span> </span><span class="WHIT">  </span><span class="NAME">DOUBLE_CLICK</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'mouseDoubleClick'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>202</span> </span><span class="WHIT">  </span><span class="NAME">MOUSE_DOWN</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'mouseDown'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>203</span> </span><span class="WHIT">  </span><span class="NAME">MOUSE_UP</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'mouseUp'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT">  </span><span class="NAME">MOVE_TO</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'mouseMove'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT">  </span><span class="NAME">SEND_KEYS_TO_ACTIVE_ELEMENT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'sendKeysToActiveElement'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>206</span> 
+<span class='line'>207</span> </span><span class="WHIT">  </span><span class="COMM">// These belong to the Advanced Touch API</span><span class="WHIT">
+<span class='line'>208</span> </span><span class="WHIT">  </span><span class="NAME">TOUCH_SINGLE_TAP</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'touchSingleTap'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>209</span> </span><span class="WHIT">  </span><span class="NAME">TOUCH_DOWN</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'touchDown'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>210</span> </span><span class="WHIT">  </span><span class="NAME">TOUCH_UP</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'touchUp'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>211</span> </span><span class="WHIT">  </span><span class="NAME">TOUCH_MOVE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'touchMove'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>212</span> </span><span class="WHIT">  </span><span class="NAME">TOUCH_SCROLL</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'touchScroll'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>213</span> </span><span class="WHIT">  </span><span class="NAME">TOUCH_DOUBLE_TAP</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'touchDoubleTap'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>214</span> </span><span class="WHIT">  </span><span class="NAME">TOUCH_LONG_PRESS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'touchLongPress'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>215</span> </span><span class="WHIT">  </span><span class="NAME">TOUCH_FLICK</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'touchFlick'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>216</span> 
+<span class='line'>217</span> </span><span class="WHIT">  </span><span class="NAME">GET_AVAILABLE_LOG_TYPES</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getAvailableLogTypes'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>218</span> </span><span class="WHIT">  </span><span class="NAME">GET_LOG</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getLog'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>219</span> </span><span class="WHIT">  </span><span class="NAME">GET_SESSION_LOGS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'getSessionLogs'</span><span class="WHIT">
+<span class='line'>220</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>221</span> 
+<span class='line'>222</span> 
+<span class='line'>223</span> 
+<span class='line'>224</span> </span><span class="COMM">/**
+<span class='line'>225</span>  * Handles the execution of {@code webdriver.Command} objects.
+<span class='line'>226</span>  * @interface
+<span class='line'>227</span>  */</span><span class="WHIT">
+<span class='line'>228</span> </span><span class="NAME">webdriver.CommandExecutor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>229</span> 
+<span class='line'>230</span> 
+<span class='line'>231</span> </span><span class="COMM">/**
+<span class='line'>232</span>  * Executes the given {@code command}. If there is an error executing the
+<span class='line'>233</span>  * command, the provided callback will be invoked with the offending error.
+<span class='line'>234</span>  * Otherwise, the callback will be invoked with a null Error and non-null
+<span class='line'>235</span>  * {@link bot.response.ResponseObject} object.
+<span class='line'>236</span>  * @param {!webdriver.Command} command The command to execute.
+<span class='line'>237</span>  * @param {function(Error, !bot.response.ResponseObject=)} callback the function
+<span class='line'>238</span>  *     to invoke when the command response is ready.
+<span class='line'>239</span>  */</span><span class="WHIT">
+<span class='line'>240</span> </span><span class="NAME">webdriver.CommandExecutor.prototype.execute</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.abstractMethod</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>241</span> </span></pre></body></html>

@@ -1,0 +1,130 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">// Copyright 2012 Software Freedom Conservancy. All Rights Reserved.</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  3</span> </span><span class="COMM">// Licensed under the Apache License, Version 2.0 (the "License");</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="COMM">// you may not use this file except in compliance with the License.</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="COMM">// You may obtain a copy of the License at</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="COMM">//      http://www.apache.org/licenses/LICENSE-2.0</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="COMM">// Unless required by applicable law or agreed to in writing, software</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="COMM">// distributed under the License is distributed on an "AS IS" BASIS,</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="COMM">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="COMM">// See the License for the specific language governing permissions and</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="COMM">// limitations under the License.</span><span class="WHIT">
+<span class='line'> 14</span> 
+<span class='line'> 15</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'webdriver.AbstractBuilder'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 16</span> 
+<span class='line'> 17</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'webdriver.Capabilities'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 18</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'webdriver.process'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 19</span> 
+<span class='line'> 20</span> 
+<span class='line'> 21</span> 
+<span class='line'> 22</span> </span><span class="COMM">/**
+<span class='line'> 23</span>  * Creates new {@code webdriver.WebDriver} clients.  Upon instantiation, each
+<span class='line'> 24</span>  * Builder will configure itself based on the following environment variables:
+<span class='line'> 25</span>  * &lt;dl>
+<span class='line'> 26</span>  *   &lt;dt>{@code webdriver.AbstractBuilder.SERVER_URL_ENV}&lt;/dt>
+<span class='line'> 27</span>  *   &lt;dd>Defines the remote WebDriver server that should be used for command
+<span class='line'> 28</span>  *       command execution; may be overridden using
+<span class='line'> 29</span>  *       {@code webdriver.AbstractBuilder.prototype.usingServer}.&lt;/dd>
+<span class='line'> 30</span>  * &lt;/dl>
+<span class='line'> 31</span>  * @constructor
+<span class='line'> 32</span>  */</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="NAME">webdriver.AbstractBuilder</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 34</span> 
+<span class='line'> 35</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'> 36</span>    * URL of the remote server to use for new clients; initialized from the
+<span class='line'> 37</span>    * value of the {@link webdriver.AbstractBuilder.SERVER_URL_ENV} environment
+<span class='line'> 38</span>    * variable, but may be overridden using
+<span class='line'> 39</span>    * {@link webdriver.AbstractBuilder#usingServer}.
+<span class='line'> 40</span>    * @private {string}
+<span class='line'> 41</span>    */</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">  </span><span class="NAME">this.serverUrl_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">webdriver.process.getEnv</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="WHIT">      </span><span class="NAME">webdriver.AbstractBuilder.SERVER_URL_ENV</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> 
+<span class='line'> 45</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'> 46</span>    * The desired capabilities to use when creating a new session.
+<span class='line'> 47</span>    * @private {!webdriver.Capabilities}
+<span class='line'> 48</span>    */</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">  </span><span class="NAME">this.capabilities_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.Capabilities</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> 
+<span class='line'> 52</span> 
+<span class='line'> 53</span> </span><span class="COMM">/**
+<span class='line'> 54</span>  * Environment variable that defines the URL of the WebDriver server that
+<span class='line'> 55</span>  * should be used for all new WebDriver clients. This setting may be overridden
+<span class='line'> 56</span>  * using {@code #usingServer(url)}.
+<span class='line'> 57</span>  * @type {string}
+<span class='line'> 58</span>  * @const
+<span class='line'> 59</span>  * @see webdriver.process.getEnv
+<span class='line'> 60</span>  */</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="NAME">webdriver.AbstractBuilder.SERVER_URL_ENV</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'wdurl'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 62</span> 
+<span class='line'> 63</span> 
+<span class='line'> 64</span> </span><span class="COMM">/**
+<span class='line'> 65</span>  * The default URL of the WebDriver server to use if
+<span class='line'> 66</span>  * {@link webdriver.AbstractBuilder.SERVER_URL_ENV} is not set.
+<span class='line'> 67</span>  * @type {string}
+<span class='line'> 68</span>  * @const
+<span class='line'> 69</span>  */</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="NAME">webdriver.AbstractBuilder.DEFAULT_SERVER_URL</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'http://localhost:4444/wd/hub'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 71</span> 
+<span class='line'> 72</span> 
+<span class='line'> 73</span> </span><span class="COMM">/**
+<span class='line'> 74</span>  * Configures which WebDriver server should be used for new sessions. Overrides
+<span class='line'> 75</span>  * the value loaded from the {@link webdriver.AbstractBuilder.SERVER_URL_ENV}
+<span class='line'> 76</span>  * upon creation of this instance.
+<span class='line'> 77</span>  * @param {string} url URL of the server to use.
+<span class='line'> 78</span>  * @return {!webdriver.AbstractBuilder} This Builder instance for chain calling.
+<span class='line'> 79</span>  */</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="NAME">webdriver.AbstractBuilder.prototype.usingServer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">  </span><span class="NAME">this.serverUrl_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> 
+<span class='line'> 85</span> 
+<span class='line'> 86</span> </span><span class="COMM">/**
+<span class='line'> 87</span>  * @return {string} The URL of the WebDriver server this instance is configured
+<span class='line'> 88</span>  *     to use.
+<span class='line'> 89</span>  */</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="NAME">webdriver.AbstractBuilder.prototype.getServerUrl</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.serverUrl_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 93</span> 
+<span class='line'> 94</span> 
+<span class='line'> 95</span> </span><span class="COMM">/**
+<span class='line'> 96</span>  * Sets the desired capabilities when requesting a new session. This will
+<span class='line'> 97</span>  * overwrite any previously set desired capabilities.
+<span class='line'> 98</span>  * @param {!(Object|webdriver.Capabilities)} capabilities The desired
+<span class='line'> 99</span>  *     capabilities for a new session.
+<span class='line'>100</span>  * @return {!webdriver.AbstractBuilder} This Builder instance for chain calling.
+<span class='line'>101</span>  */</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="NAME">webdriver.AbstractBuilder.prototype.withCapabilities</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">capabilities</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">  </span><span class="NAME">this.capabilities_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">webdriver.Capabilities</span><span class="PUNC">(</span><span class="NAME">capabilities</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>106</span> 
+<span class='line'>107</span> 
+<span class='line'>108</span> </span><span class="COMM">/**
+<span class='line'>109</span>  * @return {!webdriver.Capabilities} The current desired capabilities for this
+<span class='line'>110</span>  *     builder.
+<span class='line'>111</span>  */</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="NAME">webdriver.AbstractBuilder.prototype.getCapabilities</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.capabilities_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>115</span> 
+<span class='line'>116</span> 
+<span class='line'>117</span> </span><span class="COMM">/**
+<span class='line'>118</span>  * Builds a new {@link webdriver.WebDriver} instance using this builder's
+<span class='line'>119</span>  * current configuration.
+<span class='line'>120</span>  * @return {!webdriver.WebDriver} A new WebDriver client.
+<span class='line'>121</span>  */</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="NAME">webdriver.AbstractBuilder.prototype.build</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.abstractMethod</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>123</span> </span></pre></body></html>

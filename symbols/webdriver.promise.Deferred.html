@@ -1,0 +1,1087 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - webdriver.promise.Deferred</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/bot.Error.html">bot.Error</a></li>
+	
+	<li><a href="../symbols/Build.html">Build</a></li>
+	
+	<li><a href="../symbols/goog.inherits-tempCtor.html">goog.inherits-tempCtor</a></li>
+	
+	<li><a href="../symbols/Server.html">Server</a></li>
+	
+	<li><a href="../symbols/TestEnvironment.html">TestEnvironment</a></li>
+	
+	<li><a href="../symbols/webdriver.AbstractBuilder.html">webdriver.AbstractBuilder</a></li>
+	
+	<li><a href="../symbols/webdriver.ActionSequence.html">webdriver.ActionSequence</a></li>
+	
+	<li><a href="../symbols/webdriver.Alert.html">webdriver.Alert</a></li>
+	
+	<li><a href="../symbols/webdriver.Builder.html">webdriver.Builder</a></li>
+	
+	<li><a href="../symbols/webdriver.Capabilities.html">webdriver.Capabilities</a></li>
+	
+	<li><a href="../symbols/webdriver.Command.html">webdriver.Command</a></li>
+	
+	<li><a href="../symbols/webdriver.EventEmitter.html">webdriver.EventEmitter</a></li>
+	
+	<li><a href="../symbols/webdriver.FirefoxDomExecutor.html">webdriver.FirefoxDomExecutor</a></li>
+	
+	<li><a href="../symbols/webdriver.Locator.html">webdriver.Locator</a></li>
+	
+	<li><a href="../symbols/webdriver.logging.Entry.html">webdriver.logging.Entry</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.Deferred.html">webdriver.promise.Deferred</a></li>
+	
+	<li><a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a></li>
+	
+	<li><a href="../symbols/webdriver.Session.html">webdriver.Session</a></li>
+	
+	<li><a href="../symbols/webdriver.stacktrace.Frame.html">webdriver.stacktrace.Frame</a></li>
+	
+	<li><a href="../symbols/webdriver.stacktrace.Snapshot.html">webdriver.stacktrace.Snapshot</a></li>
+	
+	<li><a href="../symbols/webdriver.UnhandledAlertError.html">webdriver.UnhandledAlertError</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.html">webdriver.WebDriver</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Logs.html">webdriver.WebDriver.Logs</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Navigation.html">webdriver.WebDriver.Navigation</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Options.html">webdriver.WebDriver.Options</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.TargetLocator.html">webdriver.WebDriver.TargetLocator</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Timeouts.html">webdriver.WebDriver.Timeouts</a></li>
+	
+	<li><a href="../symbols/webdriver.WebDriver.Window.html">webdriver.WebDriver.Window</a></li>
+	
+	<li><a href="../symbols/webdriver.WebElement.html">webdriver.WebElement</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class webdriver.promise.Deferred
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				<br />Extends
+					.<br />
+				
+			
+				
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/_selenium-webdriver_lib_webdriver_promise.js.html">promise.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class webdriver.promise.Deferred.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/webdriver.promise.Deferred.html#constructor">webdriver.promise.Deferred</a></b>(opt_canceller, opt_flow)
+							</div>
+							<div class="description">Represents a value that will be resolved at some point in the future.</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class webdriver.promise.Deferred.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/webdriver.promise.Deferred.html#-handled">handled</a></b>
+								</div>
+								<div class="description">Whether this Deferred's resolution was ever handled by a listener.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/webdriver.promise.Deferred.html#-listeners">listeners</a></b>
+								</div>
+								<div class="description">The listeners registered with this Deferred.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/webdriver.promise.Deferred.html#-pendingRejectionKey">pendingRejectionKey</a></b>
+								</div>
+								<div class="description">Key for the timeout used to delay reproting an unhandled rejection to the
+parent <a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a>.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/webdriver.promise.Deferred.html#-promise">promise</a></b>
+								</div>
+								<div class="description">The consumer promise for this instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/webdriver.promise.Deferred.html#-state">state</a></b>
+								</div>
+								<div class="description">This Deferred's current state.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/webdriver.promise.Deferred.html#-value">value</a></b>
+								</div>
+								<div class="description">This Deferred's resolved value; set when the state transitions from
+{@code webdriver.promise.Deferred.State_.PENDING}.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class webdriver.promise.Deferred.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.Deferred.html#-cancel">cancel</a></b>(opt_reason)
+								</div>
+								<div class="description">Attempts to cancel the computation of this instance's value.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.Deferred.html#-fulfill">fulfill</a></b>(opt_value)
+								</div>
+								<div class="description">Resolves this promise with the given value.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.Deferred.html#-isPending">isPending</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.Deferred.html#-notify">notify</a></b>(listener)
+								</div>
+								<div class="description">Notifies a single listener of this Deferred's change in state.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.Deferred.html#-notifyAll">notifyAll</a></b>(newState, newValue)
+								</div>
+								<div class="description">Notifies all of the listeners registered with this Deferred that its state
+has changed.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.Deferred.html#-propagateError">propagateError</a></b>(error)
+								</div>
+								<div class="description">Propagates an unhandled rejection to the parent ControlFlow in a
+future turn of the JavaScript event loop.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.Deferred.html#-reject">reject</a></b>(opt_error)
+								</div>
+								<div class="description">Rejects this promise.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.Deferred.html#-removeAll">removeAll</a></b>()
+								</div>
+								<div class="description">Removes all of the listeners previously registered on this deferred.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/webdriver.promise.Deferred.html#-then">then</a></b>(opt_callback, opt_errback)
+								</div>
+								<div class="description">Registers a callback on this Deferred.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>webdriver.promise.Deferred</b>(opt_canceller, opt_flow)
+				</div>
+				
+				<div class="description">
+					Represents a value that will be resolved at some point in the future. This
+class represents the protected "producer" half of a Promise - each Deferred
+has a {@code promise} property that may be returned to consumers for
+registering callbacks, reserving the ability to resolve the deferred to the
+producer.
+
+<p>If this Deferred is rejected and there are no listeners registered before
+the next turn of the event loop, the rejection will be passed to the
+<a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a> as an unhandled failure.
+
+<p>If this Deferred is cancelled, the cancellation reason will be forward to
+the Deferred's canceller function (if provided). The canceller may return a
+truth-y value to override the reason provided for rejection.
+					
+				</div>
+				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{Function=}</span>  <b>opt_canceller</b>
+								
+							</dt>
+								<dd>Function to call when cancelling the
+    computation of this instance's value.</dd>
+						
+							<dt>
+								<span class="light fixedFont">{<a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a>=}</span>  <b>opt_flow</b>
+								
+							</dt>
+								<dd>The control flow
+    this instance was created under. This should only be provided during
+    unit tests.</dd>
+						
+						</dl>
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name="-handled"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>handled</b>
+					
+					</div>
+					<div class="description">
+						Whether this Deferred's resolution was ever handled by a listener.
+If the Deferred is rejected and its value is not handled by a listener
+before the next turn of the event loop, the error will be passed to the
+global error handler.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-listeners"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>listeners</b>
+					
+					</div>
+					<div class="description">
+						The listeners registered with this Deferred. Each element in the list will
+be a 3-tuple of the callback function, errback function, and the
+corresponding deferred object.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-pendingRejectionKey"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>pendingRejectionKey</b>
+					
+					</div>
+					<div class="description">
+						Key for the timeout used to delay reproting an unhandled rejection to the
+parent <a href="../symbols/webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a>.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-promise"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>promise</b>
+					
+					</div>
+					<div class="description">
+						The consumer promise for this instance. Provides protected access to the
+callback registering functions.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-state"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>state</b>
+					
+					</div>
+					<div class="description">
+						This Deferred's current state.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-value"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>value</b>
+					
+					</div>
+					<div class="description">
+						This Deferred's resolved value; set when the state transitions from
+{@code webdriver.promise.Deferred.State_.PENDING}.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="-cancel"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>cancel</b>(opt_reason)
+					
+					</div>
+					<div class="description">
+						Attempts to cancel the computation of this instance's value. This attempt
+will silently fail if this instance has already resolved.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{*=}</span> <b>opt_reason</b>
+									
+								</dt>
+								<dd>The reason for cancelling this promise.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-fulfill"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>fulfill</b>(opt_value)
+					
+					</div>
+					<div class="description">
+						Resolves this promise with the given value. If the value is itself a
+promise and not a reference to this deferred, this instance will wait for
+it before resolving.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{*=}</span> <b>opt_value</b>
+									
+								</dt>
+								<dd>The resolved value.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-isPending"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					<span class="light">{boolean}</span>
+					<b>isPending</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> Whether this promise's value is still pending.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="-notify"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>notify</b>(listener)
+					
+					</div>
+					<div class="description">
+						Notifies a single listener of this Deferred's change in state.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!webdriver.promise.Deferred.Listener_}</span> <b>listener</b>
+									
+								</dt>
+								<dd>The listener to
+    notify.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-notifyAll"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>notifyAll</b>(newState, newValue)
+					
+					</div>
+					<div class="description">
+						Notifies all of the listeners registered with this Deferred that its state
+has changed. Will throw an error if this Deferred has already been
+resolved.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{!webdriver.promise.Deferred.State_}</span> <b>newState</b>
+									
+								</dt>
+								<dd>The deferred's new
+    state.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{*}</span> <b>newValue</b>
+									
+								</dt>
+								<dd>The deferred's new value.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-propagateError"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					<span class="light">{number}</span>
+					<b>propagateError</b>(error)
+					
+					</div>
+					<div class="description">
+						Propagates an unhandled rejection to the parent ControlFlow in a
+future turn of the JavaScript event loop.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{*}</span> <b>error</b>
+									
+								</dt>
+								<dd>The error value to report.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{number}</span> The key for the registered timeout.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="-reject"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>reject</b>(opt_error)
+					
+					</div>
+					<div class="description">
+						Rejects this promise. If the error is itself a promise, this instance will
+be chained to it and be rejected with the error's resolved value.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{*=}</span> <b>opt_error</b>
+									
+								</dt>
+								<dd>The rejection reason, typically either a
+    {@code Error} or a {@code string}.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-removeAll"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>removeAll</b>()
+					
+					</div>
+					<div class="description">
+						Removes all of the listeners previously registered on this deferred.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Error}</span>  <b></b>
+								</dt>
+								<dd>If this deferred has already been resolved.</dd>
+							
+							</dl>
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-then"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					<span class="light">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span>
+					<b>then</b>(opt_callback, opt_errback)
+					
+					</div>
+					<div class="description">
+						Registers a callback on this Deferred.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Function=}</span> <b>opt_callback</b>
+									
+								</dt>
+								<dd>The callback.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Function=}</span> <b>opt_errback</b>
+									
+								</dt>
+								<dd>The errback.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{!<a href="../symbols/webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span> A new promise representing the result
+    of the callback.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="../symbols/webdriver.promise.Promise.html#then">webdriver.promise.Promise#then</a></dd>
+							
+							</dl>
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Jan 25 2014 14:08:12 GMT-0500 (EST)
+		</div>
+	</body>
+</html>
