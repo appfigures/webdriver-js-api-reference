@@ -32,4 +32,5 @@ Generated using [jsdoc-toolkit](https://code.google.com/p/jsdoc-toolkit/) v2.4.0
 
 ### Other resources
 
-https://github.com/camme/webdriverjs/blob/master/README.md
+- https://github.com/camme/webdriverjs/blob/master/README.md
+- https://github.com/angular/protractor/blob/master/docs/api.md
