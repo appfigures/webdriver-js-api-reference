@@ -29,3 +29,7 @@ Here is the definition for all the available locators available on `driver.By` (
 Generated using [jsdoc-toolkit](https://code.google.com/p/jsdoc-toolkit/) v2.4.0 (This version of jsdoc toolkit is deprecated, but v3.0 doesn't fully parse the API).
 
     java -jar jsrun.jar app/run.js -a -t=templates/jsdoc /selenium-webdriver/**/**/*.js
+
+### Other resources
+
+https://github.com/camme/webdriverjs/blob/master/README.md
